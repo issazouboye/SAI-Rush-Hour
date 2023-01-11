@@ -25,12 +25,17 @@ class Board():
             if i[1] == "H":
                 board[int(i[3]) - 1][int(i[2]) - 1] = i[0]
                 if i[4] == "2":
-                    board[int(i[3]) - 1][[int(i[2])]] = i[0]
+                    board[int(i[3]) - 1][int(i[2])] = i[0]
                 if i[4] == "3":
-                    board[int(i[3]) - 1][[int(i[2])]] = i[0]
-                    board[int(i[3]) - 1][[int(i[2]) + 1]] = i[0]
+                    board[int(i[3]) - 1][int(i[2])] = i[0]
+                    board[int(i[3]) - 1][int(i[2]) + 1] = i[0]
             else:
                 board[int(i[3]) - 1][int(i[2]) - 1]= i[0]
+                if i[4] == "2":
+                    board[int(i[3])][int(i[2]) - 1] = i[0]
+                if i[4] == "3":
+                    board[int(i[3])][int(i[2]) - 1] = i[0]
+                    board[int(i[3]) + 1][int(i[2]) - 1] = i[0]
         print(board)
 
 test =  Board(6)
