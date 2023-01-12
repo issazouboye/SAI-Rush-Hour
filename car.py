@@ -10,8 +10,7 @@ class Car:
         self.length = length 
         
 
-    def move(self):
+    def __repr__(self) -> str:
+        return f"{self.orientation}{self.column}{self.row}{self.length}"
 
-        if self.orientation == 'H':
-            pass 
             
