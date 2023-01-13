@@ -1,7 +1,7 @@
 import numpy as np
 from car import Car
 
-class Board():
+class Board:
     def __init__(self, size: int):
         self.colomn = size
         self.row = size
