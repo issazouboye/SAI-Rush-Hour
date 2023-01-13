@@ -47,20 +47,16 @@ class Board():
                             if j-1>=0 and self.board[i][j-1] == "0":
                                 self.board[i][j-1] = self.board[i][j]
                                 self.board[i][j+1] = "0"
-                            elif j+2 < self.row and self.board[i][j+2] == "0":
-                                self.board[i][j+2] = self.board[i][j]
-                                self.board[i][j] = "0"
+                            elif j+1 < self.row and self.board[i][j+1] == "0":
+                                self.board[i][j+1] = self.board[i][j]
+                                self.board[i][j-1] = "0"
                         else:
                             if j-1 >= 0 and self.board[i][j-1] == "0":
                                 self.board[i][j-1] = self.board[i][j]
                                 self.board[i][j+2] = "0"
-                            elif j+3< self.row and self.board[i][j+3] == "0":
-                                print("hello")
-                                print(i)
-                                print(j)
-                                print(self.board[i][j])
-                                self.board[i][j+3] = self.board[i][j]
-                                self.board[i][j] = "0"
+                            elif j+1< self.row and self.board[i][j+1] == "0":
+                                self.board[i][j+1] = self.board[i][j]
+                                self.board[i][j-2] = "0"
                     else:
                         if self.cars[self.board[i][j]].length == "2":
                             # verticale move naar beneden
@@ -75,14 +71,12 @@ class Board():
                             if i-1 >= 0 and self.board[i-1][j] == "0":
                                 self.board[i-1][j] = self.board[i][j]
                                 self.board[i+2][j] = "0"
-                            elif i+3< self.row and self.board[i+3][j] == "0":
-                                self.board[i+3][j] = self.board[i][j]
-                                self.board[i][j] = "0"
+                            elif i+1< self.row and self.board[i+1][j] == "0":
+                                self.board[i+1][j] = self.board[i][j]
+                                self.board[i-2][j] = "0"
+
 
         print(self.board)
-
-
-
 
 
 
