@@ -277,12 +277,14 @@ if __name__ == "__main__":
     movement = []
     for i,j in zip(begincarlist, endcarorientation):
         movement.append(j-i)
-
-    print(end_board)
+        
     print("Car Move")
     for i in range(len(begincarlist)):
         print(f"{end_cars[i].name}   ", end="")
-        print(movement[i])
+        if movement[i] >= 0:
+            print(f" {movement[i]}")
+        else:
+            print(movement[i])
     
 
         
