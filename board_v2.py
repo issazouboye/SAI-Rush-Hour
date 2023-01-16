@@ -216,12 +216,12 @@ class Random_solver:
     def __init__(self, initial_cars, initial_board):
         self.initial_cars = initial_cars 
         self.initial_board = initial_board 
+        self.steps = 0
         self.end_cars = None 
         self.end_board = None 
     
     def solve_board(self):
         new_game = Game(self.initial_cars, self.initial_board)          
-        steps = 0 
 
         while True:        
             new_cars = random.choice(new_game.get_next_configurations())            
@@ -230,13 +230,16 @@ class Random_solver:
             print() 
 
             new_game = Game(new_cars, updated_board)
-            steps += 1 
+            self.steps += 1 
 
             if new_game.is_solved():
                 self.end_cars = new_cars 
                 self.end_board = updated_board 
-                print(f"It took {steps} steps to solve this game") 
+                print(f"It took {self.steps} steps to solve this game") 
                 break 
+   
+    def step_count(self):
+        return self.steps
 
     def get_end_board(self):
         return self.end_board 
