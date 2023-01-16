@@ -218,7 +218,7 @@ class Random_solver:
         self.initial_board = initial_board 
         self.steps = 0
         self.end_cars = None 
-        self.end_board = None 
+        self.end_board = None                 
     
     def solve_board(self):
         new_game = Game(self.initial_cars, self.initial_board)          
