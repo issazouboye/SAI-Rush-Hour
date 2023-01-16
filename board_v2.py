@@ -216,6 +216,7 @@ class Random_solver:
     def __init__(self, initial_cars, initial_board):
         self.initial_cars = initial_cars 
         self.initial_board = initial_board 
+        self.end_board = None 
     
     def solve_board(self):
         new_game = Game(self.initial_cars, self.initial_board)          
@@ -231,8 +232,12 @@ class Random_solver:
             steps += 1 
 
             if new_game.is_solved():
+                self.end_board = updated_board 
                 print(f"It took {steps} steps to solve this game") 
                 break 
+
+    def get_end_board(self):
+        return self.end_board 
 
                  
 if __name__ == "__main__":
@@ -245,6 +250,8 @@ if __name__ == "__main__":
 
     random_solver = Random_solver(initial_cars, initial_board) 
     random_solver.solve_board()
+
+    print(random_solver.get_end_board()) 
 
     
 
