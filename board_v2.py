@@ -1,3 +1,4 @@
+from __future__ import annotations 
 import numpy as np
 # from car import Car
 import copy 
@@ -60,7 +61,13 @@ class Car:
 
     def move_down(self):
         if self.orientation == "V":
-            self.row += 1                     
+            self.row += 1  
+
+    def __hash__(self) -> int:
+        return hash((self.name, self.column, self.row))
+
+    def __eq__(self, other) -> bool:
+        return isinstance(other, Car)                   
 
 
 class Board:
@@ -71,7 +78,7 @@ class Board:
         self.board = np.array(board)
 
         # List with cars 
-        self.cars = [] 
+        self.cars = set() 
     
     def load_board(self, filename: str):  
 
@@ -89,7 +96,7 @@ class Board:
                 length = int(splits[4])  
 
                 car = Car(name, orientation, column, row, length) 
-                self.cars.append(car)                   
+                self.cars.add(car)                   
         
         # Place the cars on the board 
         for car in self.cars:
@@ -119,7 +126,7 @@ class Game:
 
     def get_next_configurations(self): 
 
-        # List filled with lists of car objects 
+        # List filled with sets of car objects 
         configurations = []         
 
         for car in self.cars:
@@ -133,11 +140,11 @@ class Game:
                     new_car = copy.copy(car) 
                     new_car.move_left() 
 
-                    # Remove old car from list and append the moved car to list 
+                    # Remove old car from set and add the moved car to set
                     new_cars.remove(car)
-                    new_cars.append(new_car) 
+                    new_cars.add(new_car) 
 
-                    # Add new list of cars to configurations list 
+                    # Add new set of cars to configurations list 
                     configurations.append(new_cars) 
 
                 # Check if you can move to the right 
@@ -146,11 +153,11 @@ class Game:
                     new_car = copy.copy(car) 
                     new_car.move_right() 
 
-                    # Remove old car from list and append the moved car to list 
+                    # Remove old car from set and add the moved car to set
                     new_cars.remove(car)
-                    new_cars.append(new_car) 
+                    new_cars.add(new_car) 
 
-                    # Add new list of cars to configurations list 
+                    # Add new set of cars to configurations list 
                     configurations.append(new_cars)
 
             # Check for vertical cars 
@@ -162,11 +169,11 @@ class Game:
                     new_car = copy.copy(car) 
                     new_car.move_up()  
 
-                    # Remove old car from list and append the moved car to list 
+                    # Remove old car from set and add the moved car to set 
                     new_cars.remove(car)
-                    new_cars.append(new_car) 
+                    new_cars.add(new_car) 
 
-                    # Add new list of cars to configurations list 
+                    # Add new set of cars to configurations list 
                     configurations.append(new_cars) 
 
                 # Check if you can move down 
@@ -175,11 +182,11 @@ class Game:
                     new_car = copy.copy(car) 
                     new_car.move_down() 
 
-                    # Remove old car from list and append the moved car to list 
+                    # Remove old car from set and add the moved car to set
                     new_cars.remove(car)
-                    new_cars.append(new_car) 
+                    new_cars.add(new_car) 
 
-                    # Add new list of cars to configurations list 
+                    # Add new set of cars to configurations list 
                     configurations.append(new_cars)
 
         return configurations 
