@@ -248,19 +248,19 @@ class Random_solver:
         return self.end_cars 
 
                  
-if __name__ == "__main__":
+# if __name__ == "__main__":
 
-    initial_board = Board(6)
-    initial_board.load_board("Rushhour6x6_1.csv")
+#     # initial_board = Board(6)
+#     # initial_board.load_board("Rushhour6x6_1.csv")
 
-    initial_cars = initial_board.get_initial_cars() 
-    initial_board = initial_board.get_initial_board() 
+#     # initial_cars = initial_board.get_initial_cars() 
+#     # initial_board = initial_board.get_initial_board() 
 
-    random_solver = Random_solver(initial_cars, initial_board) 
-    random_solver.solve_board()
+#     # random_solver = Random_solver(initial_cars, initial_board) 
+#     # random_solver.solve_board()
 
-    end_cars = random_solver.get_end_cars()
-    end_board = random_solver.get_end_board()
+#     # end_cars = random_solver.get_end_cars()
+#     # end_board = random_solver.get_end_board()
 
     
 
