@@ -77,8 +77,8 @@ class Board:
         board = [["0" for i in range(self.size)] for j in range(self.size)]
         self.board = np.array(board)
 
-        # List with cars 
-        self.cars = set() 
+        # Set with cars 
+        self.cars = set()        
     
     def load_board(self, filename: str):  
 
@@ -96,7 +96,8 @@ class Board:
                 length = int(splits[4])  
 
                 car = Car(name, orientation, column, row, length) 
-                self.cars.add(car)                   
+                self.cars.add(car)
+                self.cars_list.append(car)                   
         
         # Place the cars on the board 
         for car in self.cars:
