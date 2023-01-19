@@ -1,101 +1,75 @@
-import numpy as np
 from car import Car
-
-class Board:
-    def __init__(self, size: int):
-        self.colomn = size
-        self.row = size
-        board = [["0" for i in range(self.colomn)] for j in range(self.row)]
-        self.board = np.array(board)
-        self.cars = {}
-    
-    def load_board(self, filename: str):  
-
-        with open(filename, 'r') as f:
-            variablearray = []
-            for line in f:
-                line = line.strip()
-                variables = line.split(",")
-                car = Car(variables[0], variables[1], variables[2], variables[3], variables[4])
-                self.cars[variables[0]] = car
-                variablearray.append(variables)
-            variablearray.pop(0)
-            self.cars.pop("car")
-        for i in variablearray:
-            if i[1] == "H":
-                self.board[int(i[3]) - 1][int(i[2]) - 1] = i[0]
-                if i[4] == "2":
-                    self.board[int(i[3]) - 1][int(i[2])] = i[0]
-                elif i[4] == "3":
-                    self.board[int(i[3]) - 1][int(i[2])] = i[0]
-                    self.board[int(i[3]) - 1][int(i[2]) + 1] = i[0]
-            else:
-                self.board[int(i[3]) - 1][int(i[2]) - 1]= i[0]
-                if i[4] == "2":
-                    self.board[int(i[3])][int(i[2]) - 1] = i[0]
-                elif i[4] == "3":
-                    self.board[int(i[3])][int(i[2]) - 1] = i[0]
-                    self.board[int(i[3]) + 1][int(i[2]) - 1] = i[0]
-        print(self.board)
-    
-    def move(self):
-        outputlist = []
-        for i in range(len(self.board)):
-            for j in range(len(self.board)):
-                if self.board[i][j] != "0":
-                    if self.cars[self.board[i][j]].orientation == "H":
-                        if self.cars[self.board[i][j]].length == "2":
-                            if j-1>=0 and self.board[i][j-1] == "0":
-                                self.board[i][j-1] = self.board[i][j]
-                                self.board[i][j+1] = "0"
-                                outputlist.append((self.board[i][j], -1))
-                            elif j+1 < self.row and self.board[i][j+1] == "0":
-                                self.board[i][j+1] = self.board[i][j]
-                                self.board[i][j-1] = "0"
-                                outputlist.append((self.board[i][j], 1))
-                        else:
-                            if j-1 >= 0 and self.board[i][j-1] == "0":
-                                self.board[i][j-1] = self.board[i][j]
-                                self.board[i][j+2] = "0"
-                                outputlist.append((self.board[i][j], -1))
-                            elif j+1< self.row and self.board[i][j+1] == "0":
-                                self.board[i][j+1] = self.board[i][j]
-                                self.board[i][j-2] = "0"
-                                outputlist.append((self.board[i][j], 1))
-                    else:
-                        if self.cars[self.board[i][j]].length == "2":
-                            # verticale move naar beneden
-                            if i+1< self.row and self.board[i + 1][j] == "0":
-                                self.board[i + 1][j] = self.board[i][j]
-                                self.board[i - 1][j] = "0"
-                                outputlist.append((self.board[i][j], 1))
-                            elif i-1 >= 0 and self.board[i-1][j] == "0":
-                                self.board[i-1][j] = self.board[i][j]
-                                self.board[i+1][j] = "0"
-                                outputlist.append((self.board[i][j], -1))
-                        else:
-                            if i-1 >= 0 and self.board[i-1][j] == "0":
-                                self.board[i-1][j] = self.board[i][j]
-                                self.board[i+2][j] = "0"
-                                outputlist.append((self.board[i][j], -1))
-                            elif i+1< self.row and self.board[i+1][j] == "0":
-                                self.board[i+1][j] = self.board[i][j]
-                                self.board[i-2][j] = "0"
-                                outputlist.append((self.board[i][j], 1))
+from board_random import *
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib import colors as c
+import matplotlib.animation as animation
+from typing import List
 
 
-        print(self.board)
-        print(outputlist)
+def visualize(grid_values:List[np.ndarray], showplot:bool=True, saveplot:bool=False,
+              filename:str='simulation_animation', colors:List[str]=['black', 'green', 'red']):
+    """
+    Animates the Cellular automata simulation result.
 
+    Args:
+        grid_values (List[np.ndarray]): a list of the grids (numpy 2d-arrays) generated during the simulation
+        showplot (bool, optional): show the visualization. Defaults to True.
+        saveplot (bool, optional): saves the visualization as a gif. Defaults to False.
+        filename (str, optional): filename used to save animation. Defaults to 'simulation_animation'.
+        colors (List[str], optional): colors used in animation. Length of list must correspond with number of
+                                      unique values in grid (i.e. the number of unique states).
+                                      Defaults to ['black', 'green', 'red'].
+    """
 
+    # Set up figure and colors
+    fig = plt.figure(figsize=(8,8))
+    cmap = c.ListedColormap(colors)
 
+    # Plot frames
+    ims = [[plt.imshow(grid, vmin=0, vmax=len(colors), cmap=cmap, animated=True)] for grid in grid_values]
 
+    plt.axis('off')
+    plt.tight_layout()
 
+    ani = animation.ArtistAnimation(fig, ims, interval=50, blit=True, repeat_delay=1000)
 
+    if saveplot:
+        ani.save(filename + '.gif', writer=animation.PillowWriter(fps=10))
 
-test =  Board(6)
-test.load_board("Rushhour6x6_3.csv")
-test.move()
-# print(test.load_board("Rushhour9x9_6.csv"))
+    if showplot:
+        plt.show()
+
+if __name__ == "__main__":
+  
+    smallest_steps = 100000
+
+    initial_board = Board(6)
+    initial_board.load_board("Rushhour6x6_1.csv")     
+
+    initial_cars = initial_board.get_initial_cars() 
+    initial_board = initial_board.get_initial_board()         
+
+    master_random_solver = Random_solver_v2(initial_cars, initial_board)  
+ 
+    for i in range(1):     
+
+        random_solver = copy.deepcopy(master_random_solver)
+        random_solver.solve_board()
+
+        # end_cars = random_solver.get_end_cars()
+        # end_board = random_solver.get_end_board()        
+
+        steps = random_solver.step_count()
+
+        if steps < smallest_steps:
+            smallest_steps = steps                          
+
+    print()
+    print(f"The smallest number of steps is: {smallest_steps}")
+
+    boards = random_solver.get_list_boards()
+
+    visualize(boards, saveplot = True)
 
 

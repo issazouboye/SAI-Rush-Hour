@@ -5,7 +5,7 @@ import copy
 from math import ceil
 import random  
   
-  
+
 class Board:
 
     def __init__(self, size: int):
@@ -138,11 +138,13 @@ class Random_solver_v2:
         self.steps = 0
         self.end_cars = None 
         self.end_board = None 
+        self.boards = []
 
     def solve_board(self):     
         new_game = Game(self.initial_cars, self.initial_board)
         cars = new_game.get_cars()
         board = self.initial_board 
+        self.boards.append(board)
 
         while True:             
             new_car = random.choice(cars) 
@@ -171,7 +173,8 @@ class Random_solver_v2:
                     new_car.move_down()                   
                     self.steps += 1
 
-            board = new_game.get_updated_board(new_car, old_column, old_row)                        
+            board = new_game.get_updated_board(new_car, old_column, old_row)  
+            self.boards.append(board)                      
 
             if new_game.is_solved():
                 self.end_cars = cars 
@@ -187,6 +190,9 @@ class Random_solver_v2:
 
     def get_end_cars(self):
         return self.end_cars 
+    
+    def get_list_boards(self):
+        return self.boards 
 
 
 if __name__ == "__main__":
@@ -197,7 +203,7 @@ if __name__ == "__main__":
     initial_board.load_board("Rushhour6x6_1.csv")     
 
     initial_cars = initial_board.get_initial_cars() 
-    initial_board = initial_board.get_initial_board()  
+    initial_board = initial_board.get_initial_board()      
 
     master_random_solver = Random_solver_v2(initial_cars, initial_board)  
  
