@@ -61,7 +61,7 @@ class Car:
 
     def move_down(self):
         if self.orientation == "V":
-            self.row += 1  
+            self.row += 1     
 
     def __hash__(self) -> int:
         return hash((self.name, self.column, self.row))
@@ -123,64 +123,62 @@ class Game:
         self.cars = cars 
         self.board = board      
 
-    def get_updated_board(self, car, old_column, old_row, new_column, new_row):
+    def get_updated_board(self, new_car: Car, old_column, old_row):
 
-        if car.orientation == "H":
-            if car.length == "2":
-                if j-1>=0 and self.board[i][j-1] == "0":
-                    self.board[i][j-1] = self.board[i][j]
-                    self.board[i][j+1] = "0"
-                    
-                elif j+1 < self.row and self.board[i][j+1] == "0":
-                    self.board[i][j+1] = self.board[i][j]
-                    self.board[i][j-1] = "0"
-                    
-            else:
-                if j-1 >= 0 and self.board[i][j-1] == "0":
-                    self.board[i][j-1] = self.board[i][j]
-                    self.board[i][j+2] = "0"
-                    
-                elif j+1< self.row and self.board[i][j+1] == "0":
-                    self.board[i][j+1] = self.board[i][j]
-                    self.board[i][j-2] = "0"
-                               
-        else:
-            if self.cars[self.board[i][j]].length == "2":
-                # verticale move naar beneden
-                if i+1< self.row and self.board[i + 1][j] == "0":
-                    self.board[i + 1][j] = self.board[i][j]
-                    self.board[i - 1][j] = "0"
-                    
-                elif i-1 >= 0 and self.board[i-1][j] == "0":
-                    self.board[i-1][j] = self.board[i][j]
-                    self.board[i+1][j] = "0"
-                    
-            else:
-                if i-1 >= 0 and self.board[i-1][j] == "0":
-                    self.board[i-1][j] = self.board[i][j]
-                    self.board[i+2][j] = "0"
-                    
-                elif i+1< self.row and self.board[i+1][j] == "0":
-                    self.board[i+1][j] = self.board[i][j]
-                    self.board[i-2][j] = "0"
-                              
+        new_column = new_car.column
+        new_row = new_car.row
 
+        if new_car.orientation == "H":
+            if new_car.length == 2:
 
+                # Case car moved to the right 
+                if new_column > old_column:
+                    self.board[old_row][old_column] = "0" 
+                    self.board[old_row][old_column + 2] = new_car.name 
 
-        # new_board = [["0" for i in range(len(self.board))] for j in range(len(self.board))]
-        # self.board = np.array(new_board)
+                # Case if car moved to the left 
+                elif new_column < old_column:
+                    self.board[old_row][new_column + 2] = "0"
+                    self.board[old_row][new_column] = new_car.name 
 
-        # # Place the cars on the board 
-        # for car in new_cars:
-        #     if car.orientation == "H":
-        #         for j in range(car.length):
-        #             self.board[car.row][car.column + j] = car.name 
+            if new_car.length == 3:
 
-        #     if car.orientation == "V":
-        #         for i in range(car.length):
-        #             self.board[car.row + i][car.column] = car.name 
-        
-        # return self.board      
+                # Case car moved to the right 
+                if new_column > old_column:
+                    self.board[old_row][old_column] = "0" 
+                    self.board[old_row][old_column + 3] = new_car.name 
+
+                # Case car moved to the left 
+                elif new_column < old_column:
+                    self.board[old_row][new_column + 3] = "0"
+                    self.board[old_row][new_column] = new_car.name 
+
+        if new_car.orientation == "V":
+            if new_car.length == 2:
+
+                # Case car moved down
+                if new_row > old_row:
+                    self.board[old_row][old_column] = "0" 
+                    self.board[old_row + 2][old_column] = new_car.name 
+
+                # Case if car moved up
+                elif new_row < old_row:
+                    self.board[new_row + 2][old_column] = "0"
+                    self.board[new_row][old_column] = new_car.name 
+
+            if new_car.length == 3:
+
+                # Case car moved down
+                if new_row > old_row:
+                    self.board[old_row][old_column] = "0" 
+                    self.board[old_row + 2][old_column] = new_car.name 
+
+                # Case if car moved up
+                elif new_row < old_row:
+                    self.board[new_row + 2][old_column] = "0"
+                    self.board[new_row][old_column] = new_car.name    
+
+        return self.board                                                         
 
     def is_solved(self): 
         for car in self.cars:
@@ -207,63 +205,41 @@ class Random_solver_v2:
 
     def solve_board(self):     
         new_game = Game(self.initial_cars, self.initial_board)
+        cars = new_game.get_cars()
+        board = self.initial_board 
 
-        while True:
-            cars = new_game.get_cars() 
+        while True:             
             new_car = random.choice(cars) 
+            old_column = new_car.column
+            old_row = new_car.row            
 
             if new_car.orientation == "H":
                 direction = random.choice(["left", "right"])
 
-                if direction == "left" and new_car.is_movable(direction, new_game.get_updated_board(cars)):
-                    old_column = new_car.column 
-                    old_row = new.car.row 
-
-                    new_car.move_left()
-                    new_column = new.car.column
-                    new_row = new.car.row 
-
+                if direction == "left" and new_car.is_movable(direction, board):
+                    new_car.move_left()                 
                     self.steps += 1
 
-                elif direction == "right" and new_car.is_movable(direction, new_game.get_updated_board(cars)):
-                    old_column = new_car.column 
-                    old_row = new.car.row 
-
-                    new_car.move_right()
-                    new_column = new.car.column
-                    new_row = new.car.row 
-
+                elif direction == "right" and new_car.is_movable(direction, board):
+                    new_car.move_right()                  
                     self.steps += 1 
 
             if new_car.orientation == "V":
                 direction = random.choice(["up", "down"])
 
-                if direction == "up" and new_car.is_movable(direction, new_game.get_updated_board(cars)):
-                    old_column = new_car.column 
-                    old_row = new.car.row 
-
-                    new_car.move_up()
-                    new_column = new.car.column
-                    new_row = new.car.row 
-
+                if direction == "up" and new_car.is_movable(direction, board):
+                    new_car.move_up()               
                     self.steps += 1
 
-                elif direction == "down" and new_car.is_movable(direction, new_game.get_updated_board(cars)):
-                    old_column = new_car.column 
-                    old_row = new.car.row 
-
-                    new_car.move_down() 
-                    new_column = new.car.column
-                    new_row = new.car.row 
-
+                elif direction == "down" and new_car.is_movable(direction, board):
+                    new_car.move_down()                   
                     self.steps += 1
 
-            new_game.get_updated_board(new_car, old_column, old_row, new_column, new_row)                  
-             
+            board = new_game.get_updated_board(new_car, old_column, old_row)                        
 
             if new_game.is_solved():
                 self.end_cars = cars 
-                self.end_board = new_game.get_updated_board(cars)  
+                self.end_board = board   
                 print(f"It took {self.steps} steps to solve this game") 
                 break 
         
@@ -279,7 +255,7 @@ class Random_solver_v2:
 
 if __name__ == "__main__":
 
-    
+    smallest_steps = 100000
 
     for i in range(10):    
         initial_board = Board(6)
@@ -294,4 +270,15 @@ if __name__ == "__main__":
         end_cars = random_solver.get_end_cars()
         end_board = random_solver.get_end_board()
 
+        steps = random_solver.step_count()
+
+        if steps < smallest_steps:
+            smallest_steps = steps 
+
+
         # print(end_board)
+        # print()
+
+    print()
+    print(f"The smallest number of steps is: {smallest_steps}") 
+
