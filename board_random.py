@@ -1,7 +1,7 @@
 from __future__ import annotations 
 import numpy as np
 # from car import Car
-# import copy 
+import copy 
 from math import ceil
 import random  
 
@@ -257,14 +257,17 @@ if __name__ == "__main__":
 
     smallest_steps = 100000
 
-    for i in range(10):    
-        initial_board = Board(6)
-        initial_board.load_board("Rushhour6x6_1.csv")
+    initial_board = Board(6)
+    initial_board.load_board("Rushhour6x6_1.csv")     
 
-        initial_cars = initial_board.get_initial_cars() 
-        initial_board = initial_board.get_initial_board()   
+    initial_cars = initial_board.get_initial_cars() 
+    initial_board = initial_board.get_initial_board()  
 
-        random_solver = Random_solver_v2(initial_cars, initial_board) 
+    master_random_solver = Random_solver_v2(initial_cars, initial_board)  
+ 
+    for i in range(100):     
+
+        random_solver = copy.deepcopy(master_random_solver)
         random_solver.solve_board()
 
         end_cars = random_solver.get_end_cars()
@@ -273,11 +276,7 @@ if __name__ == "__main__":
         steps = random_solver.step_count()
 
         if steps < smallest_steps:
-            smallest_steps = steps 
-
-
-        # print(end_board)
-        # print()
+            smallest_steps = steps                          
 
     print()
     print(f"The smallest number of steps is: {smallest_steps}") 
