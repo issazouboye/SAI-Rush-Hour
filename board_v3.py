@@ -3,6 +3,9 @@ import numpy as np
 import copy 
 from math import ceil
 import random  
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+
 
 
 class Car:
@@ -101,15 +104,14 @@ class Board:
                 for i in range(car.length):
                     self.board[car.row + i][car.column] = car.name 
 
-        print(self.board)
-        print() 
+        # print(self.board)
+        # print() 
 
     def get_initial_cars(self):
         return self.cars 
 
     def get_initial_board(self):
         return self.board 
-    
 
 class Game:
 
@@ -132,6 +134,7 @@ class Game:
                     new_cars = copy.copy(self.cars) 
                     new_car = copy.copy(car) 
                     new_car.move_left() 
+
 
                     # Remove old car from list and append the moved car to list 
                     new_cars.remove(car)
@@ -160,7 +163,8 @@ class Game:
                 if car.is_movable("up", self.board):
                     new_cars = copy.copy(self.cars) 
                     new_car = copy.copy(car) 
-                    new_car.move_up()  
+                    new_car.move_up() 
+
 
                     # Remove old car from list and append the moved car to list 
                     new_cars.remove(car)
@@ -174,6 +178,7 @@ class Game:
                     new_cars = copy.copy(self.cars) 
                     new_car = copy.copy(car) 
                     new_car.move_down() 
+
 
                     # Remove old car from list and append the moved car to list 
                     new_cars.remove(car)
@@ -218,17 +223,17 @@ class Random_solver:
         self.initial_board = initial_board 
         self.end_cars = None 
         self.end_board = None 
+        self.listarray = [initial_board]
     
     def solve_board(self):
         new_game = Game(self.initial_cars, self.initial_board)          
         steps = 0 
-
         while True:        
             new_cars = random.choice(new_game.get_next_configurations())            
             updated_board = new_game.get_updated_board(new_cars) 
             # print(updated_board) 
             # print() 
-
+            self.listarray.append(updated_board)
             new_game = Game(new_cars, updated_board)
             steps += 1 
 
@@ -258,7 +263,7 @@ if __name__ == "__main__":
 
     end_cars = random_solver.get_end_cars()
     end_board = random_solver.get_end_board()
-    
+        
     begincarlist = []
     for i in initial_cars:
         if i.orientation == "H":
@@ -285,6 +290,11 @@ if __name__ == "__main__":
             print(f" {movement[i]}")
         else:
             print(movement[i])
+    
+    print(random_solver.listarray[0])
+
+
+    
     
 
         
