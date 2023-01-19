@@ -44,10 +44,10 @@ class Experiment:
         plt.title('Aantal Stappen om Rush Hour op te lossen')
         plt.xlabel('Amount of Steps')
         plt.ylabel('Frequencey')
-        plt.savefig('Experiment_1000_runs.png')
+        plt.savefig('Experiment_10000_runs.png')
 
 if __name__ == "__main__":
 
-    new_experiment = Experiment(1000)
+    new_experiment = Experiment(10000)
     new_experiment.experiment_list()
     new_experiment.plot()
