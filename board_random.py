@@ -203,13 +203,11 @@ if __name__ == "__main__":
     initial_board.load_board("Rushhour6x6_1.csv")     
 
     initial_cars = initial_board.get_initial_cars() 
-    initial_board = initial_board.get_initial_board()      
-
-    master_random_solver = Random_solver_v2(initial_cars, initial_board)  
+    initial_board = initial_board.get_initial_board()
  
     for i in range(100):     
 
-        random_solver = copy.deepcopy(master_random_solver)
+        random_solver = Random_solver_v2(copy.deepcopy(initial_cars), copy.deepcopy(initial_board))
         random_solver.solve_board()
 
         end_cars = random_solver.get_end_cars()

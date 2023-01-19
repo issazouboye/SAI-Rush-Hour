@@ -8,7 +8,7 @@ from typing import List
 
 
 def visualize(grid_values:List[np.ndarray], showplot:bool=True, saveplot:bool=False,
-              filename:str='simulation_animation', colors:List[str]=['black', 'green', 'red']):
+              filename:str='simulation_animation', colors:List[str]=['red', 'black', 'green']):
     """
     Animates the Cellular automata simulation result.
 
@@ -21,10 +21,14 @@ def visualize(grid_values:List[np.ndarray], showplot:bool=True, saveplot:bool=Fa
                                       unique values in grid (i.e. the number of unique states).
                                       Defaults to ['black', 'green', 'red'].
     """
+    grid_values = np.vectorize(lambda x: ord(x) - ord('A'))(grid_values[:10])
+    # print(grid_values)
 
     # Set up figure and colors
     fig = plt.figure(figsize=(8,8))
     cmap = c.ListedColormap(colors)
+    
+    # (ord(car_character) - ord('A')) % 3
 
     # Plot frames
     ims = [[plt.imshow(grid, vmin=0, vmax=len(colors), cmap=cmap, animated=True)] for grid in grid_values]
@@ -69,7 +73,9 @@ if __name__ == "__main__":
     print(f"The smallest number of steps is: {smallest_steps}")
 
     boards = random_solver.get_list_boards()
+    print(boards)
 
-    visualize(boards, saveplot = True)
+    # visualize(boards, saveplot = True)
+
 
 
