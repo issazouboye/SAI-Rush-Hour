@@ -44,38 +44,5 @@ def visualize(grid_values:List[np.ndarray], showplot:bool=True, saveplot:bool=Fa
     if showplot:
         plt.show()
 
-if __name__ == "__main__":
-  
-    smallest_steps = 100000
-
-    initial_board = Board(6)
-    initial_board.load_board("Rushhour6x6_1.csv")     
-
-    initial_cars = initial_board.get_initial_cars() 
-    initial_board = initial_board.get_initial_board()         
-
-    master_random_solver = Random_solver_v2(initial_cars, initial_board)  
- 
-    for i in range(1):     
-
-        random_solver = copy.deepcopy(master_random_solver)
-        random_solver.solve_board()
-
-        # end_cars = random_solver.get_end_cars()
-        # end_board = random_solver.get_end_board()        
-
-        steps = random_solver.step_count()
-
-        if steps < smallest_steps:
-            smallest_steps = steps                          
-
-    print()
-    print(f"The smallest number of steps is: {smallest_steps}")
-
-    boards = random_solver.get_list_boards()
-    print(boards)
-
-    # visualize(boards, saveplot = True)
-
 
 

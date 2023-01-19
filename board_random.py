@@ -4,7 +4,7 @@ from car import Car
 import copy 
 from math import ceil
 import random  
-  
+from board import visualize
 
 class Board:
 
@@ -197,27 +197,42 @@ class Random_solver_v2:
 
 if __name__ == "__main__":
 
-    smallest_steps = 100000
+    # smallest_steps = 100000
+
+    # initial_board = Board(6)
+    # initial_board.load_board("Rushhour6x6_1.csv")     
+
+    # initial_cars = initial_board.get_initial_cars() 
+    # initial_board = initial_board.get_initial_board()
+ 
+    # for i in range(100):     
+
+    #     random_solver = Random_solver_v2(copy.deepcopy(initial_cars), copy.deepcopy(initial_board))
+    #     random_solver.solve_board()
+
+    #     end_cars = random_solver.get_end_cars()
+    #     end_board = random_solver.get_end_board()
+
+    #     steps = random_solver.step_count()
+
+    #     if steps < smallest_steps:
+    #         smallest_steps = steps                          
+
+    # print()
+    # print(f"The smallest number of steps is: {smallest_steps}") 
 
     initial_board = Board(6)
-    initial_board.load_board("Rushhour6x6_1.csv")     
+    initial_board.load_board("Rushhour6x6_1.csv")
 
     initial_cars = initial_board.get_initial_cars() 
-    initial_board = initial_board.get_initial_board()
- 
-    for i in range(100):     
+    initial_board = initial_board.get_initial_board() 
 
-        random_solver = Random_solver_v2(copy.deepcopy(initial_cars), copy.deepcopy(initial_board))
-        random_solver.solve_board()
+    random_solver = Random_solver_v2(initial_cars, initial_board) 
+    random_solver.solve_board()
 
-        end_cars = random_solver.get_end_cars()
-        end_board = random_solver.get_end_board()
+    end_cars = random_solver.get_end_cars()
+    end_board = random_solver.get_end_board()
+        
 
-        steps = random_solver.step_count()
-
-        if steps < smallest_steps:
-            smallest_steps = steps                          
-
-    print()
-    print(f"The smallest number of steps is: {smallest_steps}") 
-
+    boardslist = random_solver.boards
+    visualize(boardslist, saveplot = True)
