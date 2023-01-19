@@ -235,4 +235,4 @@ if __name__ == "__main__":
         
 
     boardslist = random_solver.boards
-    visualize(boardslist, saveplot = True)
+    # visualize(boardslist, saveplot = True)
