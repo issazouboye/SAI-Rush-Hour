@@ -21,7 +21,7 @@ def visualize(grid_values:List[np.ndarray], showplot:bool=True, saveplot:bool=Fa
                                       unique values in grid (i.e. the number of unique states).
                                       Defaults to ['black', 'green', 'red'].
     """
-    grid_values = np.vectorize(lambda x: ord(x) - ord('A'))(grid_values[:10])
+    grid_values = np.vectorize(lambda x: ord(x) - ord('A'))(grid_values[:50])
     print(grid_values)
 
     # Set up figure and colors
