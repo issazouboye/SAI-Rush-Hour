@@ -195,8 +195,8 @@ class Random_solver:
                  
 if __name__ == "__main__":
 
-    initial_board = Board(6)
-    initial_board.load_board("Rushhour6x6_1.csv")
+    initial_board = Board(9)
+    initial_board.load_board("Rushhour9x9_5.csv")
 
     initial_cars = initial_board.get_initial_cars() 
     initial_board = initial_board.get_initial_board() 
@@ -237,7 +237,6 @@ if __name__ == "__main__":
     boardlist = random_solver.listarray
     print(random_solver.steps)
     visualize(boardlist, saveplot = True)
-    print(boardlist[-1])
 
 
     
