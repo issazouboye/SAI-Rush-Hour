@@ -138,12 +138,13 @@ class Random_solver_v2:
         self.steps = 0
         self.end_cars = None 
         self.end_board = None 
-        self.boards = [initial_board]
+        self.boards = []
 
     def solve_board(self):     
         new_game = Game(self.initial_cars, self.initial_board)
         cars = new_game.get_cars()
-        board = self.initial_board         
+        board = self.initial_board  
+        self.boards.append(copy.deepcopy(board))       
 
         while True:             
             new_car = random.choice(cars) 
