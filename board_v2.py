@@ -96,8 +96,7 @@ class Board:
                 length = int(splits[4])  
 
                 car = Car(name, orientation, column, row, length) 
-                self.cars.add(car)
-                self.cars_list.append(car)                   
+                self.cars.add(car)                                  
         
         # Place the cars on the board 
         for car in self.cars:
@@ -109,6 +108,7 @@ class Board:
                 for i in range(car.length):
                     self.board[car.row + i][car.column] = car.name 
 
+        print("First board:")
         print(self.board)
         print() 
 
@@ -136,59 +136,31 @@ class Game:
             if car.orientation == "H":
 
                 # Check if you can move to the left 
-                if car.is_movable("left", self.board):
-                    new_cars = copy.copy(self.cars) 
-                    new_car = copy.copy(car) 
-                    new_car.move_left() 
-
-                    # Remove old car from set and add the moved car to set
-                    new_cars.remove(car)
-                    new_cars.add(new_car) 
-
-                    # Add new set of cars to configurations list 
-                    configurations.append(new_cars) 
+                if car.is_movable("left", self.board):                     
+                    car.move_left() 
+                    configurations.append(copy.deepcopy(self.cars)) 
+                    car.move_right()                 
 
                 # Check if you can move to the right 
-                if car.is_movable("right", self.board):
-                    new_cars = copy.copy(self.cars) 
-                    new_car = copy.copy(car) 
-                    new_car.move_right() 
-
-                    # Remove old car from set and add the moved car to set
-                    new_cars.remove(car)
-                    new_cars.add(new_car) 
-
-                    # Add new set of cars to configurations list 
-                    configurations.append(new_cars)
+                if car.is_movable("right", self.board):                     
+                    car.move_right() 
+                    configurations.append(copy.deepcopy(self.cars)) 
+                    car.move_left()                 
 
             # Check for vertical cars 
             if car.orientation == "V":
 
                 # Check if you can move up 
-                if car.is_movable("up", self.board):
-                    new_cars = copy.copy(self.cars) 
-                    new_car = copy.copy(car) 
-                    new_car.move_up()  
-
-                    # Remove old car from set and add the moved car to set 
-                    new_cars.remove(car)
-                    new_cars.add(new_car) 
-
-                    # Add new set of cars to configurations list 
-                    configurations.append(new_cars) 
+                if car.is_movable("up", self.board):                    
+                    car.move_up()                      
+                    configurations.append(copy.deepcopy(self.cars)) 
+                    car.move_down()                    
 
                 # Check if you can move down 
-                if car.is_movable("down", self.board):
-                    new_cars = copy.copy(self.cars) 
-                    new_car = copy.copy(car) 
-                    new_car.move_down() 
-
-                    # Remove old car from set and add the moved car to set
-                    new_cars.remove(car)
-                    new_cars.add(new_car) 
-
-                    # Add new set of cars to configurations list 
-                    configurations.append(new_cars)
+                if car.is_movable("down", self.board):                    
+                    car.move_down() 
+                    configurations.append(copy.deepcopy(self.cars)) 
+                    car.move_up()                    
 
         return configurations 
 
@@ -234,8 +206,8 @@ class Random_solver:
         while True:        
             new_cars = random.choice(new_game.get_next_configurations())            
             updated_board = new_game.get_updated_board(new_cars) 
-            print(updated_board) 
-            print() 
+            # print(updated_board) 
+            # print() 
 
             new_game = Game(new_cars, updated_board)
             self.steps += 1 
@@ -264,12 +236,20 @@ if __name__ == "__main__":
     initial_cars = initial_board.get_initial_cars() 
     initial_board = initial_board.get_initial_board() 
 
-    random_solver = Random_solver(initial_cars, initial_board) 
-    random_solver.solve_board()
+    # random_solver = Random_solver(initial_cars, initial_board) 
+    # random_solver.solve_board()
 
-    end_cars = random_solver.get_end_cars()
-    end_board = random_solver.get_end_board()
+    # end_cars = random_solver.get_end_cars()
+    # end_board = random_solver.get_end_board()
 
+    first_state = Game(initial_cars, initial_board) 
+
+    list_states = first_state.get_next_configurations()
+
+    for state in list_states:
+        board = first_state.get_updated_board(state) 
+        print(board) 
+        print() 
     
 
 

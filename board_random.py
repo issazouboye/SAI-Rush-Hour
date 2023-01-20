@@ -62,7 +62,7 @@ class Game:
     def get_updated_board(self, new_car: Car, old_column, old_row):
 
         new_column = new_car.column
-        new_row = new_car.row
+        new_row = new_car.row       
 
         if new_car.orientation == "H":
             if new_car.length == 2:
@@ -70,7 +70,7 @@ class Game:
                 # Case car moved to the right 
                 if new_column > old_column:
                     self.board[old_row][old_column] = "0" 
-                    self.board[old_row][old_column + 2] = new_car.name 
+                    self.board[old_row][old_column + 2] = new_car.name                     
 
                 # Case if car moved to the left 
                 elif new_column < old_column:
@@ -138,12 +138,13 @@ class Random_solver_v2:
         self.steps = 0
         self.end_cars = None 
         self.end_board = None 
-        self.boards = [initial_board]
+        self.boards = []
 
     def solve_board(self):     
         new_game = Game(self.initial_cars, self.initial_board)
-        cars = new_game.get_cars()
-        board = self.initial_board         
+        cars = self.initial_cars 
+        board = self.initial_board  
+        self.boards.append(copy.deepcopy(board))       
 
         while True:             
             new_car = random.choice(cars) 

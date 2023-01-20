@@ -6,9 +6,11 @@ from matplotlib import colors as c
 import matplotlib.animation as animation
 from typing import List
 
+color_list = ["white","indigo","maroon", "lightblue","black","lavender", "darkgreen","darkblue", "lightseagreen", "tomato", "darkorange", "yellowgreen", "chocolate", "orange", "purple","teal", "sienna", "pink", "olive", "yellow","blue","green", "gold", "silver", "brown",'red']
+
 
 def visualize(grid_values:List[np.ndarray], showplot:bool=True, saveplot:bool=False,
-              filename:str='simulation_animation', colors:List[str]=['red', 'black', 'green']):
+              filename:str='simulation_animation', colors:List[str]=color_list):
     """
     Animates the Cellular automata simulation result.
 
