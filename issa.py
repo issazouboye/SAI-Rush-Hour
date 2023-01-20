@@ -5,7 +5,7 @@ from math import ceil
 import random  
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
-from visualize import visualize
+from visissa import visualize
 
                   
 class Board:
@@ -166,10 +166,10 @@ class Random_solver:
         self.end_cars = None 
         self.end_board = None 
         self.listarray = [initial_board]
+        self.steps = 0
     
     def solve_board(self):
         new_game = Game(self.initial_cars, self.initial_board)          
-        steps = 0 
         while True:        
             new_cars = random.choice(new_game.get_next_configurations())            
             updated_board = new_game.get_updated_board(new_cars) 
@@ -177,12 +177,12 @@ class Random_solver:
             # print() 
             self.listarray.append(updated_board)
             new_game = Game(new_cars, updated_board)
-            steps += 1 
+            self.steps += 1 
 
             if new_game.is_solved():
                 self.end_cars = new_cars 
                 self.end_board = updated_board 
-                print(f"It took {steps} steps to solve this game") 
+                print(f"It took {self.steps} steps to solve this game") 
                 break 
 
     def get_end_board(self):
@@ -190,6 +190,7 @@ class Random_solver:
 
     def get_end_cars(self):
         return self.end_cars 
+
 
                  
 if __name__ == "__main__":
@@ -234,6 +235,7 @@ if __name__ == "__main__":
             print(movement[i])
 
     boardlist = random_solver.listarray
+    print(random_solver.steps)
     visualize(boardlist, saveplot = True)
     print(boardlist[-1])
 
