@@ -138,13 +138,12 @@ class Random_solver_v2:
         self.steps = 0
         self.end_cars = None 
         self.end_board = None 
-        self.boards = []
+        self.boards = [initial_board]
 
     def solve_board(self):     
         new_game = Game(self.initial_cars, self.initial_board)
         cars = new_game.get_cars()
-        board = self.initial_board 
-        self.boards.append(board)
+        board = self.initial_board         
 
         while True:             
             new_car = random.choice(cars) 
@@ -174,7 +173,7 @@ class Random_solver_v2:
                     self.steps += 1
 
             board = new_game.get_updated_board(new_car, old_column, old_row)  
-            self.boards.append(board)                      
+            self.boards.append(copy.deepcopy(board))                      
 
             if new_game.is_solved():
                 self.end_cars = cars 

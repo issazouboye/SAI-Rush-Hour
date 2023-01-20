@@ -57,10 +57,10 @@ class Car:
         if self.orientation == "V":
             self.row += 1  
 
-    def __hash__(self) -> int:
-        return hash((self.name, self.column, self.row))
+    # def __hash__(self) -> int:
+    #     return hash((self.name, self.column, self.row))
 
-    def __eq__(self, other) -> bool:
-        return isinstance(other, Car)     
+    # def __eq__(self, other) -> bool:
+    #     return isinstance(other, Car)     
 
             
