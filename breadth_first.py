@@ -32,8 +32,8 @@ class State:
     def get_next_configurations(self): 
 
         # List filled with sets of car objects 
-        configurations = []         
-
+        configurations = []    
+     
         for car in self.cars:
 
             # Check for horizontal cars 
@@ -95,12 +95,16 @@ class BreadthFirst:
     def __init__(self, first_state: State, size):
         self.first_state = first_state
         self.size = size 
-        self.boards_queue = deque() 
-        self.visited = set()        
         self.steps = 0
 
+        # Initialize a queue 
+        self.boards_queue = deque()
+
+        # Initialize a set to keep up the board states already visited 
+        self.visited = set()        
+        
         # Put first state in queue
-        self.boards_queue.appendleft(first_state)
+        self.boards_queue.append(first_state)
 
         # Add first state to visited set 
         self.visited.add(first_state) 
@@ -109,24 +113,26 @@ class BreadthFirst:
 
         while len(self.boards_queue) != 0 :
 
-            # Pop new board and path
-            new_board = self.boards_queue.pop()
+            # Pop new board 
+            new_board = self.boards_queue.popleft()
             self.steps += 1
 
-            # if board is solved, return result
+            # If board is solved return result
             if new_board.is_solved():
                 print(f"It took {self.steps} steps to solve this game") 
                 return new_board 
 
-            # else add all possible boards to queue, if they're not in visited set 
+            # Add all possible next boards to queue, if they're not in visited set 
             else:
-                for configuration in new_board.get_next_configurations():
+                next_configurations = new_board.get_next_configurations()
+
+                for configuration in next_configurations:
                     next_board = State(configuration, self.size)
 
                     if next_board in self.visited:
-                        pass
+                        pass                    
                     else:
-                        self.boards_queue.appendleft(next_board)
+                        self.boards_queue.append(next_board)
                         self.visited.add(next_board) 
 
 
