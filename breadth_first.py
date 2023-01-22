@@ -2,6 +2,7 @@ import numpy as np
 import copy 
 from board_v2 import Car, Board 
 from collections import deque
+from math import ceil 
 
 
 class State: 
@@ -76,25 +77,66 @@ class State:
                 return True 
 
         return False  
+    
+    def __hash__(self) -> int:
+        return hash(self.__repr__())
+    
+    def __repr__(self) -> str:
+        printable_board = np.array_str(self.board)
+
+        return printable_board 
+
+    def __eq__(self, other) -> bool:
+        return isinstance(other, State) 
 
 
 class BreadthFirst:
 
-    def __init__(self, first_state: State):
+    def __init__(self, first_state: State, size):
         self.first_state = first_state
+        self.size = size 
         self.boards_queue = deque() 
-        self.visited  = {}
-        self.visited[first_state] = 0
+        self.visited = set()        
         self.steps = 0
 
         # Put first state in queue
         self.boards_queue.appendleft(first_state)
 
-        
+        # Add first state to visited set 
+        self.visited.add(first_state) 
+    
+    def run(self):
 
-    def get_next_states(self, current_state: State):
-        return current_state.get_next_configurations() 
+        while len(self.boards_queue) != 0 :
 
+            # Pop new board and path
+            new_board = self.boards_queue.pop()
+            self.steps += 1
+
+            # if board is solved, return result
+            if new_board.is_solved():
+                print(f"It took {self.steps} steps to solve this game") 
+                return new_board 
+
+            # else add all possible boards to queue, if they're not in visited set 
+            else:
+                for configuration in new_board.get_next_configurations():
+                    next_board = State(configuration, self.size)
+
+                    if next_board in self.visited:
+                        pass
+                    else:
+                        self.boards_queue.appendleft(next_board)
+                        self.visited.add(next_board) 
 
 
 if __name__ == "__main__":
+
+    initial_board = Board(6)
+    initial_board.load_board("Rushhour6x6_1.csv") 
+    initial_cars = initial_board.get_initial_cars()
+
+    first_state = State(initial_cars, 6) 
+    bf = BreadthFirst(first_state, 6) 
+    print(bf.run())
+    
