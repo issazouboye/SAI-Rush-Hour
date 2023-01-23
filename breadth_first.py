@@ -112,7 +112,7 @@ class BreadthFirst:
     def run(self):
 
         while len(self.boards_queue) != 0 :
-            for step in range(len(self.boards_queue)):
+            for depth in range(len(self.boards_queue)):
 
                 # Pop new board 
                 new_board = self.boards_queue.popleft()                
