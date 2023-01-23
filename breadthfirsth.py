@@ -1,9 +1,13 @@
-from math import ceil
-import numpy as np
-import copy
-from car import Car
+from __future__ import annotations
+import numpy as np 
+import copy 
+from board_v2 import Car, Board 
+from collections import deque
+from math import ceil 
+import heapq
+import time
 
-class State2: 
+class State: 
 
     def __init__(self, cars: set[Car], size: int):
         self.cars = cars
@@ -78,11 +82,13 @@ class State2:
         return False  
 
     def blockingcars(self):
-        for i in range(len(self.board) - 1):
-                if self.board[ceil(len(self.board) / 2) - 1 ][i] != "0" and self.board[ceil(len(self.board) / 2) - 1 ][i] != "X":
-                    self.counter += 1
-
-        return (self.board, self.counter)
+        column = len(self.board) - 1
+        numberofcars = 0
+        while self.board[ceil(len(self.board) / 2) - 1 ][column] != "X":
+            if self.board[ceil(len(self.board) / 2) - 1 ][column] != "0":
+                numberofcars += 1
+            column -= 1
+        return numberofcars
 
     def __hash__(self) -> int:
         return hash(self.__repr__())
@@ -95,16 +101,62 @@ class State2:
     def __eq__(self, other) -> bool:
         return isinstance(other, State)
 
-# class Blockingheuristic:
+
+class BreadthFirst:
+
+    def __init__(self, first_state: State, size):
+        self.first_state = first_state
+        self.first_score = first_state.blockingcars()
+        self.size = size 
+        self.steps = 0
+
+        # Initialize a queue 
+        self.boards_queue = []
+
+        # Initialize a set to keep up the board states already visited 
+        self.visited = set()        
+        
+        # Put first state in queue
+        self.boards_queue.append((self.first_score, self.steps, self.first_state))
+        heapq.heapify(self.boards_queue)
+
+        # Add first state to visited set 
+        self.visited.add(first_state) 
     
-#     def __init__(self, board):
-#         self.board =  board
-#         self.counter = 0
+    def run(self):
+        while len(self.boards_queue) != 0 :
+            # Pop new board 
+            blocks, steps, board = heapq.heappop(self.boards_queue)                
 
-#     def blockingcars(self):
-#         for i in range(len(self.board) - 1):
-#                 if self.board[ceil(len(self.board) / 2) - 1 ][i] != "0" and self.board[ceil(len(self.board) / 2) - 1 ][i] != "X":
-#                     self.counter += 1
+            # If board is solved return result
+            if board.is_solved():
+                print(f"It took {steps} steps to solve this game") 
+                return board 
 
-#         return self.counter
+            # Add all possible next boards to queue, if they're not in visited set 
+            else:
+                next_configurations = board.get_next_configurations()
 
+                for configuration in next_configurations:
+                    next_board = State(configuration, self.size)
+                    blocks = next_board.blockingcars() + steps
+
+                    if next_board in self.visited:
+                        pass                    
+                    else:
+                        heapq.heappush(self.boards_queue, (blocks, steps + 1, next_board))
+                        self.visited.add(next_board) 
+            
+
+
+if __name__ == "__main__":
+    start = time.time()
+    initial_board = Board(6)
+    initial_board.load_board("Rushhour6x6_1.csv") 
+    initial_cars = initial_board.get_initial_cars()
+
+    first_state = State(initial_cars, 6) 
+    bf = BreadthFirst(first_state, 6) 
+    bf.run()
+    print(time.time()- start)
+    
