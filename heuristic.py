@@ -150,74 +150,72 @@ class Random_solver_v2:
             for i in range(len(board) - 1):
                 if board[ceil(len(board) / 2) - 1 ][i] != "0" and board[ceil(len(board) / 2) - 1 ][i] != "X":
                     for j in cars:
+                        counter = 0
                         if j.name == board[ceil(len(board) / 2) - 1 ][i]:
-                            new_car = j
-                            old_column = j.column
-                            old_row = j.row
-                            if new_car.is_movable("up", board):
-                                new_car.move_up()
-                                board = new_game.get_updated_board(new_car, old_column, old_row)  
+                            old_column = copy.deepcopy(j.column)
+                            old_row = copy.deepcopy(j.row)
+                            if j.is_movable("up", board):
+                                j.move_up()
+                                board = new_game.get_updated_board(j, old_column, old_row)  
                                 if board[ceil(len(board) / 2) - 1 ][i] == "0":
                                     self.steps += 1 
+                                    counter = 1
                                     self.boards.append(copy.deepcopy(board)) 
                                 else:
-                                    new_car.move_down()
-                                    column = new_car.column
-                                    row = new_car.row
-                                    board = new_game.get_updated_board(new_car, column, row)
-                            if new_car.is_movable("down", board):
-                                new_car.move_down()
-                                board = new_game.get_updated_board(new_car, old_column, old_row)  
+                                    old_column = copy.deepcopy(j.column)
+                                    old_row = copy.deepcopy(j.row)
+                                    j.move_down()
+                                    board = new_game.get_updated_board(j, old_column, old_row)
+                            if j.is_movable("down", board) and counter == 0:
+                                old_column = copy.deepcopy(j.column)
+                                old_row = copy.deepcopy(j.row)
+                                j.move_down()
+                                board = new_game.get_updated_board(j, old_column, old_row)  
                                 if board[ceil(len(board) / 2) - 1 ][i] == "0":
                                     self.steps += 1
                                     self.boards.append(copy.deepcopy(board)) 
                                 else:
-                                    new_car.move_up()
-                                    column = new_car.column
-                                    row = new_car.row
-                                    board = new_game.get_updated_board(new_car, column, row) 
+                                    old_column = copy.deepcopy(j.column)
+                                    old_row = copy.deepcopy(j.row)
+                                    j.move_up()
+                                    board = new_game.get_updated_board(j, old_column, old_row) 
                                 
-                    if new_game.is_solved():
-                        self.end_cars = cars 
-                        self.end_board = board   
-                        print(f"It took {self.steps} steps to solve this game") 
-                        break 
+                              
+            new_car = random.choice(cars) 
+            old_column = new_car.column
+            old_row = new_car.row            
 
-                else:
-                    new_car = random.choice(cars) 
-                    old_column = new_car.column
-                    old_row = new_car.row            
+            if new_car.orientation == "H":
+                direction = random.choice(["left", "right"])
 
-                    if new_car.orientation == "H":
-                        direction = random.choice(["left", "right"])
+                if direction == "left" and new_car.is_movable(direction, board):
+                    new_car.move_left()                
+                    self.steps += 1
 
-                        if direction == "left" and new_car.is_movable(direction, board):
-                            new_car.move_left()                 
-                            self.steps += 1
+                elif direction == "right" and new_car.is_movable(direction, board):
+                    new_car.move_right()                  
+                    self.steps += 1 
 
-                        elif direction == "right" and new_car.is_movable(direction, board):
-                            new_car.move_right()                  
-                            self.steps += 1 
+            if new_car.orientation == "V":
+                direction = random.choice(["up", "down"])
 
-                    if new_car.orientation == "V":
-                        direction = random.choice(["up", "down"])
+                if direction == "up" and new_car.is_movable(direction, board):
+                    new_car.move_up()  
+                    print("helllo")
+                    self.steps += 1
 
-                        if direction == "up" and new_car.is_movable(direction, board):
-                            new_car.move_up()               
-                            self.steps += 1
+                elif direction == "down" and new_car.is_movable(direction, board):
+                    new_car.move_down()                   
+                    self.steps += 1
 
-                        elif direction == "down" and new_car.is_movable(direction, board):
-                            new_car.move_down()                   
-                            self.steps += 1
+            board = new_game.get_updated_board(new_car, old_column, old_row)  
+            self.boards.append(copy.deepcopy(board))                      
 
-                    board = new_game.get_updated_board(new_car, old_column, old_row)  
-                    self.boards.append(copy.deepcopy(board))                      
-
-                if new_game.is_solved():
-                    self.end_cars = cars 
-                    self.end_board = board   
-                    print(f"It took {self.steps} steps to solve this game") 
-                    break 
+            if new_game.is_solved():
+                self.end_cars = cars 
+                self.end_board = board   
+                print(f"It took {self.steps} steps to solve this game") 
+                break 
         
     def step_count(self):
         return self.steps
@@ -257,4 +255,6 @@ if __name__ == "__main__":
 
     print()
     print(f"The smallest number of steps is: {smallest_steps}") 
+    print(random_solver.boards[0])
+    
 
