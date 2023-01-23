@@ -201,7 +201,6 @@ class Random_solver_v2:
 
                 if direction == "up" and new_car.is_movable(direction, board):
                     new_car.move_up()  
-                    print("helllo")
                     self.steps += 1
 
                 elif direction == "down" and new_car.is_movable(direction, board):
