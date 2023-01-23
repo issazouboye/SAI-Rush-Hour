@@ -112,28 +112,30 @@ class BreadthFirst:
     def run(self):
 
         while len(self.boards_queue) != 0 :
+            for step in range(len(self.boards_queue)):
 
-            # Pop new board 
-            new_board = self.boards_queue.popleft()
+                # Pop new board 
+                new_board = self.boards_queue.popleft()                
+
+                # If board is solved return result
+                if new_board.is_solved():
+                    print(f"It took {self.steps} steps to solve this game") 
+                    return new_board 
+
+                # Add all possible next boards to queue, if they're not in visited set 
+                else:
+                    next_configurations = new_board.get_next_configurations()
+
+                    for configuration in next_configurations:
+                        next_board = State(configuration, self.size)
+
+                        if next_board in self.visited:
+                            pass                    
+                        else:
+                            self.boards_queue.append(next_board)
+                            self.visited.add(next_board) 
+            
             self.steps += 1
-
-            # If board is solved return result
-            if new_board.is_solved():
-                print(f"It took {self.steps} steps to solve this game") 
-                return new_board 
-
-            # Add all possible next boards to queue, if they're not in visited set 
-            else:
-                next_configurations = new_board.get_next_configurations()
-
-                for configuration in next_configurations:
-                    next_board = State(configuration, self.size)
-
-                    if next_board in self.visited:
-                        pass                    
-                    else:
-                        self.boards_queue.append(next_board)
-                        self.visited.add(next_board) 
 
 
 if __name__ == "__main__":
