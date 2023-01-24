@@ -147,41 +147,52 @@ class Random_solver_v2:
         self.boards.append(copy.deepcopy(board))       
 
         while True: 
-            for i in range(len(board) - 1):
-                if board[ceil(len(board) / 2) - 1 ][i] != "0" and board[ceil(len(board) / 2) - 1 ][i] != "X":
-                    for j in cars:
-                        counter = 0
-                        if j.name == board[ceil(len(board) / 2) - 1 ][i]:
-                            old_column = copy.deepcopy(j.column)
-                            old_row = copy.deepcopy(j.row)
-                            if j.is_movable("up", board):
-                                j.move_up()
-                                board = new_game.get_updated_board(j, old_column, old_row)  
-                                if board[ceil(len(board) / 2) - 1 ][i] == "0":
-                                    self.steps += 1 
-                                    counter = 1
-                                    self.boards.append(copy.deepcopy(board)) 
-                                else:
-                                    old_column = copy.deepcopy(j.column)
-                                    old_row = copy.deepcopy(j.row)
-                                    j.move_down()
-                                    board = new_game.get_updated_board(j, old_column, old_row)
-                            if j.is_movable("down", board) and counter == 0:
-                                old_column = copy.deepcopy(j.column)
-                                old_row = copy.deepcopy(j.row)
-                                j.move_down()
-                                board = new_game.get_updated_board(j, old_column, old_row)  
-                                if board[ceil(len(board) / 2) - 1 ][i] == "0":
-                                    self.steps += 1
-                                    self.boards.append(copy.deepcopy(board)) 
-                                else:
-                                    old_column = copy.deepcopy(j.column)
-                                    old_row = copy.deepcopy(j.row)
-                                    j.move_up()
-                                    board = new_game.get_updated_board(j, old_column, old_row) 
-                                
-                              
-            new_car = random.choice(cars) 
+            # for i in range(len(board) - 1):
+            #     if board[ceil(len(board) / 2) - 1 ][i] != "0" and board[ceil(len(board) / 2) - 1 ][i] != "X":
+            #         for j in cars:
+            #             counter = 0
+            #             if j.name == board[ceil(len(board) / 2) - 1 ][i]:
+            #                 old_column = copy.deepcopy(j.column)
+            #                 old_row = copy.deepcopy(j.row)
+            #                 if j.is_movable("up", board):
+            #                     j.move_up()
+            #                     board = new_game.get_updated_board(j, old_column, old_row)  
+            #                     if board[ceil(len(board) / 2) - 1 ][i] == "0":
+            #                         self.steps += 1 
+            #                         counter = 1
+            #                         self.boards.append(copy.deepcopy(board)) 
+            #                     else:
+            #                         old_column = copy.deepcopy(j.column)
+            #                         old_row = copy.deepcopy(j.row)
+            #                         j.move_down()
+            #                         board = new_game.get_updated_board(j, old_column, old_row)
+            #                 if j.is_movable("down", board) and counter == 0:
+            #                     old_column = copy.deepcopy(j.column)
+            #                     old_row = copy.deepcopy(j.row)
+            #                     j.move_down()
+            #                     board = new_game.get_updated_board(j, old_column, old_row)  
+            #                     if board[ceil(len(board) / 2) - 1 ][i] == "0":
+            #                         self.steps += 1
+            #                         self.boards.append(copy.deepcopy(board)) 
+            #                     else:
+            #                         old_column = copy.deepcopy(j.column)
+            #                         old_row = copy.deepcopy(j.row)
+            #                         j.move_up()
+            #                         board = new_game.get_updated_board(j, old_column, old_row) 
+            carslength = copy.deepcopy(len(cars))               
+            column = len(board) - 1
+            while board[ceil(len(board) / 2) - 1][column] != "X":
+                if board[ceil(len(board) / 2) - 1][column] != "0":
+                    for i in cars:
+                        if i.name == board[ceil(len(board) / 2) - 1][column]:
+                            cars.append(i)
+                            print(i.name)
+                column -= 1
+                        
+
+            new_car = random.choices(cars) 
+            while len(cars) != carslength:
+                cars.pop()
             old_column = new_car.column
             old_row = new_car.row            
 

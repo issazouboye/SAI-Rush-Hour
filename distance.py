@@ -81,14 +81,13 @@ class State:
 
         return False  
 
-    def blockingcars(self):
-        column = len(self.board) - 1
-        numberofcars = 0
-        while self.board[ceil(len(self.board) / 2) - 1 ][column] != "X":
-            if self.board[ceil(len(self.board) / 2) - 1 ][column] != "0":
-                numberofcars += 1
-            column -= 1
-        return numberofcars
+    def reddistance(self):
+        column = 0
+        distance = 0
+        for i in range(len(self.board)-1):
+            if self.board[ceil(len(self.board) / 2) - 1 ][i] == "X":
+                distance = len(self.board) - 2 - i 
+        return distance
 
     def __hash__(self) -> int:
         return hash(self.__repr__())
@@ -106,7 +105,7 @@ class BreadthFirst:
 
     def __init__(self, first_state: State, size):
         self.first_state = first_state
-        self.first_score = first_state.blockingcars()
+        self.first_distance = first_state.reddistance()
         self.size = size 
         self.steps = 0
 
@@ -117,7 +116,7 @@ class BreadthFirst:
         self.visited = set()        
         
         # Put first state in queue
-        self.boards_queue.append((self.first_score, self.steps, self.first_state))
+        self.boards_queue.append((self.first_distance, self.steps, self.first_state))
         heapq.heapify(self.boards_queue)
 
         # Add first state to visited set 
@@ -126,7 +125,7 @@ class BreadthFirst:
     def run(self):
         while len(self.boards_queue) != 0 :
             # Pop new board 
-            blocks, steps, board = heapq.heappop(self.boards_queue)  
+            distance, steps, board = heapq.heappop(self.boards_queue)  
                          
 
             # If board is solved return result
@@ -140,11 +139,11 @@ class BreadthFirst:
 
             for configuration in next_configurations:
                 next_board = State(configuration, self.size)
-                blocks = next_board.blockingcars() + steps
+                distance = next_board.reddistance() + steps
 
                 if next_board not in self.visited:
                                         
-                    heapq.heappush(self.boards_queue, (blocks, steps + 1, next_board))
+                    heapq.heappush(self.boards_queue, (distance, steps + 1, next_board))
                     self.visited.add(next_board) 
             
 
