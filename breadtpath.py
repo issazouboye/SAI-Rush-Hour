@@ -1,20 +1,18 @@
-from __future__ import annotations
 import numpy as np 
 import copy 
 from board_v2 import Car, Board 
 from collections import deque
 from math import ceil 
-import heapq
-import time
+from visualize import visualize
+
 
 class State: 
 
-    def __init__(self, cars: set[Car], size: int):
+    def __init__(self, cars, size: int):
         self.cars = cars
         self.size = size  
-        self.board = None 
-        self.create_board()  
-        self.counter = 0        
+        self.board = None
+        self.create_board()          
 
     def create_board(self):
         board = [["0" for i in range(self.size)] for j in range(self.size)]
@@ -80,16 +78,7 @@ class State:
                 return True 
 
         return False  
-
-    def blockingcars(self):
-        column = len(self.board) - 1
-        numberofcars = 0
-        while self.board[ceil(len(self.board) / 2) - 1 ][column] != "X":
-            if self.board[ceil(len(self.board) / 2) - 1 ][column] != "0":
-                numberofcars += 1
-            column -= 1
-        return numberofcars
-
+    
     def __hash__(self) -> int:
         return hash(self.__repr__())
     
@@ -99,64 +88,84 @@ class State:
         return printable_board 
 
     def __eq__(self, other) -> bool:
-        return isinstance(other, State)
+        return isinstance(other, State) 
 
 
 class BreadthFirst:
 
     def __init__(self, first_state: State, size):
         self.first_state = first_state
-        self.first_score = first_state.blockingcars()
         self.size = size 
         self.steps = 0
+        self.archive = {}
 
         # Initialize a queue 
-        self.boards_queue = []
+        self.boards_queue = deque()
 
         # Initialize a set to keep up the board states already visited 
         self.visited = set()        
         
         # Put first state in queue
-        self.boards_queue.append((self.first_score, self.steps, self.first_state))
-        heapq.heapify(self.boards_queue)
+        self.boards_queue.append(first_state)
 
         # Add first state to visited set 
         self.visited.add(first_state) 
     
     def run(self):
+
+        self.archive[first_state] = 0
         while len(self.boards_queue) != 0 :
-            # Pop new board 
-            blocks, steps, board = heapq.heappop(self.boards_queue)  
-                         
+            for depth in range(len(self.boards_queue)):
 
-            # If board is solved return result
-            if board.is_solved():
-                print(f"It took {steps} steps to solve this game") 
-                return board 
+                # Pop new board 
+                new_board = self.boards_queue.popleft()                
 
-            # Add all possible next boards to queue, if they're not in visited set 
+                # If board is solved return result
+                if new_board.is_solved():
+                    print(f"It took {self.steps} steps to solve this game") 
+                    return new_board, self.archive
+
+                # Add all possible next boards to queue, if they're not in visited set 
+                else:
+                    next_configurations = new_board.get_next_configurations()
+
+                    for configuration in next_configurations:
+                        next_board = State(configuration, self.size)
+
+                        if next_board in self.visited:
+                            pass                    
+                        else:
+                            self.archive[next_board] = new_board
+                            self.boards_queue.append(next_board)
+                            self.visited.add(next_board) 
             
-            next_configurations = board.get_next_configurations()
+            self.steps += 1
 
-            for configuration in next_configurations:
-                next_board = State(configuration, self.size)
-                blocks = next_board.blockingcars() + steps
+def backtrace(archive, end_board):
+    boardslist = [end_board]
 
-                if next_board not in self.visited:
-                                        
-                    heapq.heappush(self.boards_queue, (blocks, steps + 1, next_board))
-                    self.visited.add(next_board) 
-            
+    while boardslist[-1] != 0:
+        boardslist.append(archive[boardslist[-1]])
+
+    boardslist.pop()
+    boardslist.reverse()
+    boardslist
+
+    return boardslist
 
 
 if __name__ == "__main__":
-    start = time.time()
+
     initial_board = Board(6)
-    initial_board.load_board("Rushhour6x6_2.csv") 
+    initial_board.load_board("Rushhour6x6_1.csv") 
     initial_cars = initial_board.get_initial_cars()
 
     first_state = State(initial_cars, 6) 
     bf = BreadthFirst(first_state, 6) 
-    bf.run()
-    print(time.time()- start)
+    end_board, archive = bf.run() 
+    stateslist = backtrace(archive, end_board)
+    boardslist = []
+    for i in stateslist:
+        boardslist.append(i.board)
+    visualize(boardslist, saveplot=True)
     

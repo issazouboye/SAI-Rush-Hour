@@ -151,7 +151,7 @@ class BreadthFirst:
 if __name__ == "__main__":
     start = time.time()
     initial_board = Board(6)
-    initial_board.load_board("Rushhour6x6_1.csv") 
+    initial_board.load_board("Rushhour6x6_2.csv") 
     initial_cars = initial_board.get_initial_cars()
 
     first_state = State(initial_cars, 6) 

@@ -6,7 +6,8 @@ from matplotlib import colors as c
 import matplotlib.animation as animation
 from typing import List
 
-color_list = ["white","indigo","maroon", "lightblue","black","lavender", "darkgreen","darkblue", "lightseagreen", "tomato", "darkorange", "yellowgreen", "chocolate", "orange", "purple","teal", "sienna", "pink", "olive", "yellow","blue","green", "gold", "silver", "brown",'red']
+color_list = ["white","indigo","maroon","lightblue","black","lavender", "darkgreen","darkblue", "lightseagreen","tomato", "darkorange", "yellowgreen", "chocolate", "orange", "purple","teal", "sienna", "pink", "olive", "yellow","blue","green", "brown",'red']
+# color_list = ["white","indigo","maroon", "lightblue","black","lavender", "darkgreen","darkblue", "lightseagreen", "tomato", "darkorange", "yellowgreen", "chocolate", "orange", "purple","teal", "sienna", "pink", "olive", "yellow","blue","green", "gold", "silver", "brown",'red']
 
 
 def visualize(grid_values:List[np.ndarray], showplot:bool=True, saveplot:bool=False,
@@ -23,7 +24,7 @@ def visualize(grid_values:List[np.ndarray], showplot:bool=True, saveplot:bool=Fa
                                       unique values in grid (i.e. the number of unique states).
                                       Defaults to ['black', 'green', 'red'].
     """
-    grid_values = np.vectorize(lambda x: ord(x) - ord('A'))(grid_values[:50])
+    grid_values = np.vectorize(lambda x: ord(x) - ord('A'))(grid_values[:])
     print(grid_values)
 
     # Set up figure and colors
@@ -38,7 +39,7 @@ def visualize(grid_values:List[np.ndarray], showplot:bool=True, saveplot:bool=Fa
     plt.axis('off')
     plt.tight_layout()
 
-    ani = animation.ArtistAnimation(fig, ims, interval=50, blit=True, repeat_delay=1000)
+    ani = animation.ArtistAnimation(fig, ims, interval=2000, blit=True, repeat_delay=5000)
 
     if saveplot:
         ani.save(filename + '.gif', writer=animation.PillowWriter(fps=10))
