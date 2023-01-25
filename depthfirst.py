@@ -138,78 +138,72 @@ class State:
     def __eq__(self, other) -> bool:
         return isinstance(other, State) 
 
-
-
-class Stack:
-    
-    def __init__(self) -> None:
-        """
-        post : creates an empty LIFO stack
-        """
-        self.depth_stack: List[Any] = []
-
-    def push(self, car: Car) -> None:
-        """
-        post : places x on top of the stack
-        """
-        self.depth_stack.append(car)
-
-    def remove_items(self):
-        """pre : self.size O > 0
-        post : removes and returns the top element of
-        the stack
-        """
-
-        if len(self.depth_stack) > 0:
-            return self.depth_stack.pop()
-
-
 class Depthfirst:
-    def __init__(self, cars_set, size):
+    def __init__(self, cars_set: State, size: int, max_height: int):
         self.cars_set = cars_set
         self.size = size
         self.steps = 0
-        self.visitedset = set()
-        self.end_cars = None 
-        self.end_board = None 
+
+        self.max_height = max_height
+
+        self.archieve = {}
+        self.archieve[cars_set] = [0, 0]
+
+
+        # archieve = {}
+        # archieve['Hello'] = ["o", 1]
+        # print(archieve["Hello"][1] + 1)
 
         self.stack = []
         self.stack.append(cars_set)
-                
-        # self.steps = float('inf')
 
+        self.visitedset = set()
         self.visitedset.add(cars_set)
 
-    # def adding_configurations(self, board):
-    #     new_step = self.stack.remove_items()
-    #     self.visitedlist.add(new_step)
 
     def solve_board(self):
-        while len(self.stack) != 0:
+
+         while len(self.stack) != 0:
             new_state = self.stack.pop()
             self.steps += 1
 
+            # if self.archieve[new_state][1] > self.max_height:
+
+
             if new_state.is_solved():
-                # self.end_cars = new_cars 
-                # self.end_board = new_state
                 print(f"It took {self.steps} steps to solve this game") 
-                break 
+                print("hello")
+                print(self.archieve[new_state])
+                return new_state 
             
             else:
                 for potential_moves in new_state.get_next_configurations():
-                    follwoing_state = State(potential_moves, self.size)
-                    if follwoing_state in self.visitedset:
-                        pass
+                    following_state = State(potential_moves, self.size)
                     
+                    if following_state in self.visitedset:
+                        pass
+
                     else:
-                        self.stack.append(follwoing_state)
-                        self.visitedset.add(follwoing_state)
+                        self.archieve[following_state] = [new_state, self.archieve[new_state][1]+1]
+                        self.stack.append(following_state)
+                        self.visitedset.add(following_state)
+
+    def backtrace(self, end_board):
+        boardslist = [end_board]
+
+        while boardslist[-1] != 0:
+            boardslist.append(self.archieve[boardslist[-1]][0])
+
+        boardslist.pop()
+        boardslist.reverse()
+        print((boardslist[-1]))
+
+        return boardslist
+
 
     def get_end_board(self):
         return self.end_board 
-
-    def get_end_cars(self):
-        return self.end_cars 
+    
 
                  
 if __name__ == "__main__":
@@ -220,33 +214,13 @@ if __name__ == "__main__":
     initial_board = initial_board.get_initial_board() 
 
     state_test = State(initial_cars, 6)
-    df = Depthfirst(state_test, 6)
-    print(df.solve_board())
+    df = Depthfirst(state_test, 6, 100)
+    end_board = df.solve_board()
+    df.backtrace(end_board)
 
 
-    def solve_board(self):
-        new_game = Game(self.initial_cars, self.initial_board)
 
-        while True:
-            configurations_list = new_game.get_next_configurations()
-            for i in configurations_list:
-                self.stack.push(i)
 
-            new_step = self.stack.remove_items()
-            updated_board = new_game.get_updated_board(new_step)
-            new_game = Game(new_step, updated_board)
-            
-            if new_game.is_solved():
-                self.end_cars = new_cars 
-                self.end_board = updated_board 
-                print(f"It took {steps} steps to solve this game") 
-                break 
-
-    def get_end_board(self):
-        return self.end_board 
-
-    def get_end_cars(self):
-        return self.end_cars 
 
                  
 
