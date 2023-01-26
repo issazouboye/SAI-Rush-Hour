@@ -114,20 +114,3 @@ class State:
 
     def __eq__(self, other) -> bool:
         return isinstance(other, State)
-
-
-
-
-if __name__ == "__main__":
-
-    initial_board = Board(6)
-    initial_board.load_board("Rushhour6x6_1.csv")
-    initial_cars = initial_board.get_initial_cars()
-
-    first_state = State(initial_cars, 6)
-    next_configurations = first_state.get_next_configurations()
-
-    for configuration in next_configurations:
-        next_state = State(configuration, 6)
-        print(next_state.get_board())
-        print()
