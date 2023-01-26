@@ -4,6 +4,7 @@ from car import Car
 import copy 
 from math import ceil
 import random  
+import time 
   
 
 class Board:
@@ -197,6 +198,8 @@ class Random_solver_v2:
 
 if __name__ == "__main__":
 
+    start = time.time()
+
     smallest_steps = 100000
 
     initial_board = Board(6)
@@ -205,7 +208,7 @@ if __name__ == "__main__":
     initial_cars = initial_board.get_initial_cars() 
     initial_board = initial_board.get_initial_board()
  
-    for i in range(100):     
+    for i in range(10):     
 
         random_solver = Random_solver_v2(copy.deepcopy(initial_cars), copy.deepcopy(initial_board))
         random_solver.solve_board()
@@ -221,3 +224,4 @@ if __name__ == "__main__":
     print()
     print(f"The smallest number of steps is: {smallest_steps}") 
 
+    print(time.time() - start)
