@@ -1,4 +1,6 @@
+from __future__ import annotations 
 import numpy as np 
+
 
 class Car:
 
@@ -39,26 +41,42 @@ class Car:
                     if self.row + 3 < len(board) and board[self.row + 3][self.column] == "0":
                         return True 
 
-        return False 
+        return False     
 
     def move_left(self):
-        if self.orientation == "H":
-            self.column -= 1 
+
+        moved_car = Car(self.name, self.orientation, self.column - 1, self.row, self.length) 
+
+        return moved_car 
 
     def move_right(self):
-        if self.orientation == "H":
-            self.column += 1
+
+        moved_car = Car(self.name, self.orientation, self.column + 1, self.row, self.length) 
+
+        return moved_car 
 
     def move_up(self):
-        if self.orientation == "V":
-            self.row -= 1 
+
+        moved_car = Car(self.name, self.orientation, self.column, self.row - 1, self.length) 
+
+        return moved_car 
 
     def move_down(self):
-        if self.orientation == "V":
-            self.row += 1  
 
-    # def __hash__(self) -> int:
-    #     return hash((self.name, self.column, self.row))
+        moved_car = Car(self.name, self.orientation, self.column, self.row + 1, self.length) 
+
+        return moved_car 
+    
+    def __str__(self):
+        return f"{self.name}, {self.column}, {self.row}"
+
+    def __hash__(self) -> int:
+        return hash(self.__str__())
+
+    def __eq__(self, other) -> bool:
+        return isinstance(other, Car) 
+   
+    
 
     # def __eq__(self, other) -> bool:
     #     return isinstance(other, Car)     
