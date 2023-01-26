@@ -25,7 +25,6 @@ def visualize(grid_values:List[np.ndarray], showplot:bool=True, saveplot:bool=Fa
                                       Defaults to ['black', 'green', 'red'].
     """
     grid_values = np.vectorize(lambda x: ord(x) - ord('A'))(grid_values[:])
-    print(grid_values)
 
     # Set up figure and colors
     fig = plt.figure(figsize=(8,8))
