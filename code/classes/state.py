@@ -1,8 +1,8 @@
 from __future__ import annotations
 import numpy as np
 from math import ceil
-from car import Car
-from board import Board
+from .car import Car
+from .board import Board
 
 
 class State:

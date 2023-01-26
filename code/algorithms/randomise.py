@@ -1,9 +1,9 @@
 from __future__ import annotations 
 import numpy as np 
 import random 
-from car import Car 
-from board import Board 
-from state import State 
+from ..classes.car import Car 
+from ..classes.board import Board 
+from ..classes.state import State 
 from math import ceil 
 
 

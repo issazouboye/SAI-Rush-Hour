@@ -5,7 +5,7 @@ from math import ceil
 import random  
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
-from visualize import visualize
+from ..visualisation.visualize import visualize
 
 
 

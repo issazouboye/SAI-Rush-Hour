@@ -1,12 +1,13 @@
 from __future__ import annotations
 import numpy as np 
 import copy 
-from board import Board
+from ..classes.board import Board
+from ..classes.state import State
 from collections import deque
 from math import ceil 
 import heapq
 import time
-from state import State
+
 
 class BlockingBestFirst:
 

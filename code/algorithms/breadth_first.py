@@ -1,8 +1,9 @@
 from __future__ import annotations 
-from board import Board 
+from ..classes.board import Board 
+from ..classes.state import State 
 from collections import deque
 import time
-from state import State 
+
 
 
 class BreadthFirst:

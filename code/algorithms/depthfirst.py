@@ -1,9 +1,9 @@
 # Depth First Search Algorithm
 from __future__ import annotations
 # from visualize import visualize
-from car import Car
-from board import Board
-from state import State
+from ..classes.car import Car
+from ..classes.board import Board
+from ..classes.state import State
 import copy 
 
 
