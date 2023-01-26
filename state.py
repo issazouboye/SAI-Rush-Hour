@@ -75,6 +75,15 @@ class State:
                     configurations.append(new_cars)
 
         return configurations
+    
+    def blockingcars(self):
+        column = len(self.board) - 1
+        numberofcars = 0
+        while self.board[ceil(len(self.board) / 2) - 1 ][column] != "X":
+            if self.board[ceil(len(self.board) / 2) - 1 ][column] != "0":
+                numberofcars += 1
+            column -= 1
+        return numberofcars       
 
     def is_solved(self):
         for car in self.cars:
