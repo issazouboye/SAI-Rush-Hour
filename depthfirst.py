@@ -142,17 +142,11 @@ class Depthfirst:
     def __init__(self, cars_set: State, size: int, max_height: int):
         self.cars_set = cars_set
         self.size = size
-        self.steps = 0
 
         self.max_height = max_height
 
         self.archieve = {}
         self.archieve[cars_set] = [0, 0]
-
-
-        # archieve = {}
-        # archieve['Hello'] = ["o", 1]
-        # print(archieve["Hello"][1] + 1)
 
         self.stack = []
         self.stack.append(cars_set)
@@ -160,6 +154,8 @@ class Depthfirst:
         self.visitedset = set()
         self.visitedset.add(cars_set)
 
+        self.current_best = float('inf')
+        
 
     def solve_board(self):
 
@@ -168,8 +164,6 @@ class Depthfirst:
             self.steps += 1
 
             # if self.archieve[new_state][1] > self.max_height:
-
-
             if new_state.is_solved():
                 print(f"It took {self.steps} steps to solve this game") 
                 print("hello")
@@ -187,6 +181,36 @@ class Depthfirst:
                         self.archieve[following_state] = [new_state, self.archieve[new_state][1]+1]
                         self.stack.append(following_state)
                         self.visitedset.add(following_state)
+
+    def solve_board_branch_bound(self):
+
+        while (len(self.stack) != 0):
+            new_state = self.stack.pop()
+            # self.steps += 1
+            # while self.archieve[new_state][1] < self.max_height:
+
+            if new_state.is_solved():
+                # print(self.archieve[new_state][0])
+                self.current_best = self.archieve[new_state][1]
+                # print(self.current_best)
+                # return new_state
+                # # if current_best < 100:
+                # #     return new_state 
+            
+            else:
+                for potential_moves in new_state.get_next_configurations():
+                    following_state = State(potential_moves, self.size)
+
+                    if following_state in self.visitedset or self.archieve[new_state][1] >= self.current_best - 1:
+                        pass
+
+                    else:
+                        self.archieve[following_state] = [new_state, self.archieve[new_state][1]+1]
+                        self.visitedset.add(following_state)
+                        self.stack.append(following_state)
+            # new_state = self.stack.pop()
+        print(self.current_best)
+        return self.current_best
 
     def backtrace(self, end_board):
         boardslist = [end_board]
