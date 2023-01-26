@@ -83,7 +83,15 @@ class State:
             if self.board[ceil(len(self.board) / 2) - 1 ][column] != "0":
                 numberofcars += 1
             column -= 1
-        return numberofcars       
+        return numberofcars 
+
+    def reddistance(self):
+        column = 0
+        distance = 0
+        for i in range(len(self.board)-1):
+            if self.board[ceil(len(self.board) / 2) - 1 ][i] == "X":
+                distance = len(self.board) - 2 - i 
+        return distance          
 
     def is_solved(self):
         for car in self.cars:
