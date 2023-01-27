@@ -1,10 +1,15 @@
 # Depth First Search Algorithm
 from __future__ import annotations
+
+import sys
+sys.path.append("..")
 # from visualize import visualize
-from ..classes.car import Car
-from ..classes.board import Board
-from ..classes.state import State
-import copy 
+from classes import board, car, state
+# from ../classes import Board 
+# from ../../classes.car import Car
+# from ../../classes.board import Board
+# from ../../classes.state import State
+# import copy 
 from typing import Optional, List
 
 
@@ -93,8 +98,8 @@ class Depthfirst:
 
                  
 if __name__ == "__main__":
-    initial_board = Board(6)
-    initial_board.load_board("Rushhour6x6_1.csv")
+    initial_board = board.Board(6)
+    initial_board.load_board("data\Rushhour6x6_1.csv")
 
     initial_cars = initial_board.get_initial_cars() 
     initial_board = initial_board.get_initial_board() 
