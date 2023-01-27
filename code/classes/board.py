@@ -1,19 +1,29 @@
+"""
+board.py
+
+UVA Programming Lab
+
+A program that loads the intial board from a csv file.
+
+"""
+
 from __future__ import annotations 
 import numpy as np 
 from .car import Car 
-
+from typing import Set
+import numpy.typing as npt
 
 class Board:
 
-    def __init__(self, size: int):
+    def __init__(self, size: int) -> None:
         self.size = size        
         board = [["0" for i in range(self.size)] for j in range(self.size)]
-        self.board = np.array(board)
+        self.board: npt.NDArray[np.str_] = np.array(board)
 
         # Set with cars 
-        self.cars = set()        
+        self.cars: Set[Car] = set()        
     
-    def load_board(self, filename: str):  
+    def load_board(self, filename: str) -> None:  
 
         # Read the data
         with open(filename, 'r') as f:
@@ -45,11 +55,11 @@ class Board:
         # print(self.board)
         # print() 
 
-    def get_initial_cars(self):
+    def get_initial_cars(self) -> Set[Car]:
         return self.cars 
     
-    def get_initial_board(self):
+    def get_initial_board(self) -> npt.NDArray[np.str_]:
         return self.board  
 
-    def get_size(self):
+    def get_size(self) -> int:
         return self.size 

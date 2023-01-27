@@ -1,17 +1,18 @@
 from __future__ import annotations 
 import numpy as np 
+import numpy.typing as npt
 
 
 class Car:
 
-    def __init__(self, name, orientation, column, row, length):
+    def __init__(self, name: str, orientation: str, column: int, row: int, length: int) -> None:
         self.name = name 
         self.orientation = orientation 
         self.column = column 
         self.row = row 
         self.length = length 
 
-    def is_movable(self, direction, board) -> bool:
+    def is_movable(self, direction: str, board: npt.NDArray[np.str_]) -> bool:
 
         if self.orientation == "H":
             if direction == "left":
@@ -43,42 +44,38 @@ class Car:
 
         return False     
 
-    def move_left(self):
+    def move_left(self) -> Car:
 
         moved_car = Car(self.name, self.orientation, self.column - 1, self.row, self.length) 
 
         return moved_car 
 
-    def move_right(self):
+    def move_right(self) -> Car:
 
         moved_car = Car(self.name, self.orientation, self.column + 1, self.row, self.length) 
 
         return moved_car 
 
-    def move_up(self):
+    def move_up(self) -> Car:
 
         moved_car = Car(self.name, self.orientation, self.column, self.row - 1, self.length) 
 
         return moved_car 
 
-    def move_down(self):
+    def move_down(self) -> Car:
 
         moved_car = Car(self.name, self.orientation, self.column, self.row + 1, self.length) 
 
         return moved_car 
     
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.name}, {self.column}, {self.row}"
 
     def __hash__(self) -> int:
         return hash(self.__str__())
 
-    def __eq__(self, other) -> bool:
+    def __eq__(self, other: object) -> bool:
         return isinstance(other, Car) 
    
-    
-
-    # def __eq__(self, other) -> bool:
-    #     return isinstance(other, Car)     
 
             

@@ -11,7 +11,7 @@ import time
 
 class DistanceBestFirst:
 
-    def __init__(self, first_state: State, size):
+    def __init__(self, first_state: State, size: int) -> None:
         self.first_state = first_state
         self.first_distance = first_state.reddistance()
         self.size = size 
@@ -30,7 +30,7 @@ class DistanceBestFirst:
         # Add first state to visited set 
         self.visited.add(first_state) 
     
-    def run(self):
+    def run(self) -> State:
         while len(self.boards_queue) != 0 :
             # Pop new board 
             distance, steps, board = heapq.heappop(self.boards_queue)  

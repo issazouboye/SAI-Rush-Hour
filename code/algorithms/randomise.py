@@ -5,15 +5,17 @@ from ..classes.car import Car
 from ..classes.board import Board 
 from ..classes.state import State 
 from math import ceil 
+import numpy.typing as npt
+
 
 
 class Random_solver_v1:
     
-    def __init__(self, initial_state: State):
+    def __init__(self, initial_state: State) -> None:
         self.initial_state = initial_state        
         self.steps = 0                        
     
-    def run(self):                 
+    def run(self) -> State:                 
 
         new_state = self.initial_state 
         size = self.initial_state.get_size()
@@ -27,20 +29,20 @@ class Random_solver_v1:
                 print(f"It took {self.steps} steps to solve this game") 
                 return new_state 
    
-    def step_count(self):
+    def step_count(self) -> int:
         return self.steps     
     
 
 
 class Random_solver_v2:
 
-    def __init__(self, initial_state: State):
+    def __init__(self, initial_state: State) -> None:
         self.initial_state = initial_state
         self.cars = initial_state.get_cars()
         self.board = initial_state.get_board()
         self.steps = 0      
 
-    def run(self):   
+    def run(self) -> None:   
 
         while True:             
             new_car = random.choice(list(self.cars))           
@@ -89,7 +91,7 @@ class Random_solver_v2:
                 print(f"It took {self.steps} steps to solve this game") 
                 break
 
-    def get_updated_board(self, moved_car: Car, old_column, old_row):
+    def get_updated_board(self, moved_car: Car, old_column: int, old_row: int) -> npt.NDArray[np.str_]:
 
         new_column = moved_car.column
         new_row = moved_car.row       
@@ -146,7 +148,7 @@ class Random_solver_v2:
 
         return self.board  
 
-    def is_solved(self): 
+    def is_solved(self) -> bool: 
         
         for car in self.cars:
             winning_column = len(self.board) - 2 
@@ -156,6 +158,6 @@ class Random_solver_v2:
 
         return False                
         
-    def step_count(self):
+    def step_count(self) -> int:
         return self.steps 
                  

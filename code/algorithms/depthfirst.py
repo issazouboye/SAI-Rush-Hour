@@ -5,10 +5,11 @@ from ..classes.car import Car
 from ..classes.board import Board
 from ..classes.state import State
 import copy 
+from typing import Optional, List
 
 
 class Depthfirst:
-    def __init__(self, cars_set: State, size: int, max_height: int):
+    def __init__(self, cars_set: State, size: int, max_height: int) -> None:
         self.cars_set = cars_set
         self.size = size
 
@@ -23,10 +24,10 @@ class Depthfirst:
         self.visitedset = set()
         self.visitedset.add(cars_set)
 
-        self.current_best = float('inf')
+        self.current_best: int = float('inf')
         
 
-    def solve_board(self):
+    def solve_board(self) -> State:
 
          while len(self.stack) != 0:
             new_state = self.stack.pop()
@@ -50,20 +51,13 @@ class Depthfirst:
                         self.stack.append(following_state)
                         self.visitedset.add(following_state)
 
-    def solve_board_branch_bound(self):
+    def solve_board_branch_bound(self) -> int:
 
         while (len(self.stack) != 0):
             new_state = self.stack.pop()
-            # self.steps += 1
-            # while self.archieve[new_state][1] < self.max_height:
 
             if new_state.is_solved():
-                # print(self.archieve[new_state][0])
                 self.current_best = self.archieve[new_state][1]
-                # print(self.current_best)
-                # return new_state
-                # # if current_best < 100:
-                # #     return new_state 
             
             else:
                 for potential_moves in new_state.get_next_configurations():
@@ -80,7 +74,7 @@ class Depthfirst:
         print(self.current_best)
         return self.current_best
 
-    def backtrace(self, end_board):
+    def backtrace(self, end_board: State) -> List[State]:
         boardslist = [end_board]
 
         while boardslist[-1] != 0:
@@ -93,7 +87,7 @@ class Depthfirst:
         return boardslist
 
 
-    def get_end_board(self):
+    def get_end_board(self) -> State:
         return self.end_board 
     
 

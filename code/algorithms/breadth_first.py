@@ -3,18 +3,19 @@ from ..classes.board import Board
 from ..classes.state import State 
 from collections import deque
 import time
+from typing import Optional, List, Deque
 
 
 
 class BreadthFirst:
 
-    def __init__(self, first_state: State, size):
+    def __init__(self, first_state: State, size: int) -> None:
         self.first_state = first_state
         self.size = size 
         self.steps = 0
 
         # Initialize a queue 
-        self.boards_queue = deque()
+        self.boards_queue: Deque[State] = deque()
 
         # Initialize a set to keep up the board states already visited 
         self.visited = set()  
@@ -31,7 +32,7 @@ class BreadthFirst:
         # Add first state to path dictionary  
         self.path[first_state] = 0 
     
-    def run(self):
+    def run(self) -> Optional[State]:
 
         while len(self.boards_queue) != 0 :
             for depth in range(len(self.boards_queue)):

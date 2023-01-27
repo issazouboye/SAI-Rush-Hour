@@ -7,11 +7,12 @@ from collections import deque
 from math import ceil 
 import heapq
 import time
+from typing import Optional
 
 
 class BlockingBestFirst:
 
-    def __init__(self, first_state: State, size):
+    def __init__(self, first_state: State, size: int) -> None:
         self.first_state = first_state
         self.first_score = first_state.blockingcars()
         self.size = size 
@@ -30,7 +31,7 @@ class BlockingBestFirst:
         # Add first state to visited set 
         self.visited.add(first_state) 
     
-    def run(self):
+    def run(self) -> State:
         while len(self.boards_queue) != 0 :
             # Pop new board 
             blocks, steps, board = heapq.heappop(self.boards_queue)  
