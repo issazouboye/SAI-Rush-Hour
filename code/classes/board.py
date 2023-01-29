@@ -1,10 +1,12 @@
 """
-board.py
+Program: board.py
 
-UVA Programming Lab
+Course: Algoritmen en Heuristieken
 
-A program that loads the intial board from a csv file.
+Students: Issa Zouboye, Alex van Diepen, Shreyas Potdar
 
+Description: This is a program that utilizes a data file to
+load the initial configuration of the rush hour game.
 """
 
 from __future__ import annotations 
@@ -16,6 +18,10 @@ import numpy.typing as npt
 class Board:
 
     def __init__(self, size: int) -> None:
+        """
+        A function that initializes an np array to create a board
+        for the initial rush hour configuration.
+        """
         self.size = size        
         board = [["0" for i in range(self.size)] for j in range(self.size)]
         self.board: npt.NDArray[np.str_] = np.array(board)
@@ -24,7 +30,10 @@ class Board:
         self.cars: Set[Car] = set()        
     
     def load_board(self, filename: str) -> None:  
-
+        """
+        A function that loads data from a csv file and creates
+        Car objects and places the cars on the board.
+        """
         # Read the data
         with open(filename, 'r') as f:
             next(f) 
@@ -56,10 +65,21 @@ class Board:
         # print() 
 
     def get_initial_cars(self) -> Set[Car]:
+        """
+        A function that returns the set of car objects with stored
+        characteristics from the csv file. 
+        """
         return self.cars 
     
     def get_initial_board(self) -> npt.NDArray[np.str_]:
+        """
+        A function that returns the intial rush hour board.
+        """
         return self.board  
 
     def get_size(self) -> int:
+        """
+        A function that returns the size of the intial rush hour 
+        board
+        """
         return self.size 

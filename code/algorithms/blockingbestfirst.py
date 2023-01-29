@@ -1,7 +1,10 @@
 """
 Program: blockingbestfrist.py
+
 Course: Algoritmen en Heuristieken
+
 Students: Issa Zouboye, Alex van Diepen, Shreyas Potdar
+
 Description: This is a algorithm that uses the number of blocking cars as a heuristic
 to solve a rush hour game.
 """
