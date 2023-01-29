@@ -1,6 +1,11 @@
-
+import csv
 from board_random import *
 import matplotlib.pyplot as plt
+
+with open('path/to/csv_file', 'w') as f:
+    writer = csv.writer(f)
+    row = [boardnumber, algoritme, amount of visited boards, number steps to solve problem, memory cost]
+    writer.writerow(row)
 
 class Experiment:
     def __init__(self, runs):

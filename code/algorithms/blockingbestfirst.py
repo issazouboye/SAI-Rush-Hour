@@ -53,12 +53,12 @@ class BlockingBestFirst:
         """
         while len(self.boards_queue) != 0 :
             # Pops and stores amount of blocking cars, steps and the board
-            blocks, steps, board = heapq.heappop(self.boards_queue)  
+            blocks, self.steps, board = heapq.heappop(self.boards_queue)  
                          
 
             # If board is solved return result
             if board.is_solved():
-                print(f"It took {steps} steps to solve this game") 
+                print(f"It took {self.steps} steps to solve this game") 
                 return board 
 
             # Add all possible next boards to queue, if they're not in visited set 
@@ -69,11 +69,11 @@ class BlockingBestFirst:
                 # stores new board configuration
                 next_board = State(configuration, self.size)
                 # stores amount of blocking cars and steps combined
-                blocks = next_board.blockingcars() + steps
+                blocks = next_board.blockingcars() + self.steps
 
                 if next_board not in self.visited:
                     # pushes the new board in a priority queue
-                    heapq.heappush(self.boards_queue, (blocks, steps + 1, next_board))
+                    heapq.heappush(self.boards_queue, (blocks, self.steps + 1, next_board))
                     # puts new board in visited set
                     self.visited.add(next_board) 
             
