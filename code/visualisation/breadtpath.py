@@ -42,18 +42,16 @@ class BreadthFirstPath:
                     return new_board, self.archive
 
                 # Add all possible next boards to queue, if they're not in visited set 
-                else:
-                    next_configurations = new_board.get_next_configurations()
+                
+                next_configurations = new_board.get_next_configurations()
 
-                    for configuration in next_configurations:
-                        next_board = State(configuration, self.size)
+                for configuration in next_configurations:
+                    next_board = State(configuration, self.size)
 
-                        if next_board in self.visited:
-                            pass                    
-                        else:
-                            self.archive[next_board] = new_board
-                            self.boards_queue.append(next_board)
-                            self.visited.add(next_board) 
+                    if next_board not in self.visited:                   
+                        self.archive[next_board] = new_board
+                        self.boards_queue.append(next_board)
+                        self.visited.add(next_board) 
             
             self.steps += 1
 

@@ -44,17 +44,14 @@ class Depthfirst:
                 print(self.archieve[new_state])
                 return new_state 
             
-            else:
-                for potential_moves in new_state.get_next_configurations():
-                    following_state = State(potential_moves, self.size)
-                    
-                    if following_state in self.visitedset:
-                        pass
-
-                    else:
-                        self.archieve[following_state] = [new_state, self.archieve[new_state][1]+1]
-                        self.stack.append(following_state)
-                        self.visitedset.add(following_state)
+            
+            for potential_moves in new_state.get_next_configurations():
+                following_state = State(potential_moves, self.size)
+                
+                if following_state not in self.visitedset:               
+                    self.archieve[following_state] = [new_state, self.archieve[new_state][1]+1]
+                    self.stack.append(following_state)
+                    self.visitedset.add(following_state)
 
     def solve_board_branch_bound(self) -> int:
 
@@ -64,17 +61,14 @@ class Depthfirst:
             if new_state.is_solved():
                 self.current_best = self.archieve[new_state][1]
             
-            else:
-                for potential_moves in new_state.get_next_configurations():
-                    following_state = State(potential_moves, self.size)
+            
+            for potential_moves in new_state.get_next_configurations():
+                following_state = State(potential_moves, self.size)
 
-                    if following_state in self.visitedset or self.archieve[new_state][1] >= self.current_best - 1:
-                        pass
-
-                    else:
-                        self.archieve[following_state] = [new_state, self.archieve[new_state][1]+1]
-                        self.visitedset.add(following_state)
-                        self.stack.append(following_state)
+                if following_state not in self.visitedset or self.archieve[new_state][1] >= self.current_best - 1:               
+                    self.archieve[following_state] = [new_state, self.archieve[new_state][1]+1]
+                    self.visitedset.add(following_state)
+                    self.stack.append(following_state)
             # new_state = self.stack.pop()
         print(self.current_best)
         return self.current_best
