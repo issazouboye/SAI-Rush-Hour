@@ -1,0 +1,6 @@
+algorithm,visited boards,number of steps,best solution
+Random,353.2,353.2,110
+BreadthFirst,8753,83,83
+DepthFirst,7,3,3
+BlockingCars,8749,83,83
+Distance,8783,83,83

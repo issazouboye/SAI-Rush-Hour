@@ -14,12 +14,12 @@ import copy
 if __name__ == "__main__":
 
     start = time.time()
-    initial_board = Board(6)
-    initial_board.load_board("data/Rushhour6x6_1.csv") 
+    initial_board = Board(9)
+    initial_board.load_board("data/Rushhour9x9_4.csv") 
     initial_cars = initial_board.get_initial_cars()
 
-    first_state = State(initial_cars, 6) 
-    bf = BlockingDistanceBestFirst(first_state, 6) 
+    first_state = State(initial_cars, 9) 
+    bf = BlockingBestFirst(first_state, 9) 
     bf.run()
 
     print(time.time() - start)

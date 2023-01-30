@@ -1,6 +1,6 @@
 algorithm,visited boards,number of steps,best solution
-Random,14824.5,14824.5,1274
-BreadthFirst,6,2,2
+Random,16277.6,16277.6,1177
+BreadthFirst,633,35,35
 DepthFirst,7,3,3
-BlockingCars,8,4,4
-Distance,9,5,5
+BlockingCars,570,35,35
+Distance,536,35,35

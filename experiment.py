@@ -15,7 +15,7 @@ def boardcsv():
 
     start = time.time()
     initial_board = Board(6)
-    initial_board.load_board("data/Rushhour6x6_1.csv") 
+    initial_board.load_board("data/Rushhour6x6_3.csv") 
     initial_cars = initial_board.get_initial_cars()
 
     # first_state = State(initial_cars, 6) 
@@ -25,13 +25,12 @@ def boardcsv():
 
     print(time.time() - start)
 
-    with open('boardscsv/board1.csv', 'w') as f:
+    with open('boardscsv/board3.csv', 'w') as f:
         writer = csv.writer(f)
         row = ["algorithm", "visited boards", "number of steps", "best solution"]
         writer.writerow(row)
         algorithmlist = ["Random","BreadthFirst", "DepthFirst", "BlockingCars", "Distance", "Branch and Bound"]
         randomlist = []
-        breadthfirstlist = []
         depthfirstlist = []
         blockingcarslist = []
         distancelist = []
@@ -46,13 +45,19 @@ def boardcsv():
             newrandom.run()
             randomlist.append(newrandom.step_count())
             
+        bf = BreadthFirst(first_state, 6)
+        bf.run()
+        bc = BlockingBestFirst(first_state, 6)
+        bc.run()
+        dc = DistanceBestFirst(first_state, 6)
+        dc.run()
 
         
         
         randomlist.sort()
-        visitedboards = [sum(randomlist)/10,6,7,8,9]
-        steps = [sum(randomlist)/10,2,3,4,5] 
-        bestvalue = [randomlist[0], 2, 3, 4, 5]
+        visitedboards = [sum(randomlist)/10, len(bf.visited),7,len(bc.visited),len(dc.visited)]
+        steps = [sum(randomlist)/10,bf.steps,3,bc.steps,dc.steps] 
+        bestvalue = [randomlist[0], bf.steps, 3, bc.steps, dc.steps]
         for i in range(5):
             rowvar = [algorithmlist[i],visitedboards[i], steps[i], bestvalue[i]]
             writer.writerow(rowvar)
