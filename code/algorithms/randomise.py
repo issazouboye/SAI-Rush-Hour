@@ -1,7 +1,10 @@
 """
 Program: randomise.py
+
 Course: Algoritmen en Heuristieken
+
 Students: Issa Zouboye, Alex van Diepen, Shreyas Potdar
+
 Description: This is a program that implements two differently implemented
 random algorthms to solved the rush hour game
 """
