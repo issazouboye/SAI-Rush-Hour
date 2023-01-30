@@ -6,19 +6,15 @@ Course: Algoritmen en Heuristieken
 Students: Issa Zouboye, Alex van Diepen, Shreyas Potdar
 
 Description: This is a program that implements the depth-first
-and branch and bound algorithm to solve a rush hour game
+algorithm to solve a rush hour game
 """
 from __future__ import annotations
 
 import sys
 sys.path.append("..")
 # from visualize import visualize
-from classes import board, car, state
-# from ../classes import Board 
-# from ../../classes.car import Car
-# from ../../classes.board import Board
-# from ../../classes.state import State
-# import copy 
+from ..classes.state import State
+from ..classes.board import Board 
 from typing import Optional, List
 
 
@@ -61,7 +57,7 @@ class Depthfirst:
         """
 
         # alrgorithm that runs until the stack is empty or a solution is found
-         while len(self.stack) != 0:
+        while len(self.stack) != 0:
             # Removal of the top most board configuration from the stack
             new_state = self.stack.pop()
 
@@ -69,8 +65,9 @@ class Depthfirst:
             if new_state.is_solved():
                 # print(f"It took {self.steps} steps to solve this game") 
                 # print("hello")
-                print(self.archieve[new_state])
-                return new_state   
+                # print(self.archieve[new_state])
+
+                return self.archieve[new_state][1]   
             
             # if the board is not solved, all potential configurations are added to the stack
             for potential_moves in new_state.get_next_configurations():
@@ -88,42 +85,7 @@ class Depthfirst:
                     # new board put into the visited set
                     self.visitedset.add(following_state)
 
-    def solve_board_branch_bound(self) -> int:
-        """
-        A function that implements the branch and bound algorithm which is
-        similar to the depth first implementation however in this case there 
-        is a constant check to see whether the depth level of a current board is
-        smaller than its parent state. 
-        """
-
-        # alrgorithm that runs until the stack is empty and returns the solution
-        while (len(self.stack) != 0):
-            new_state = self.stack.pop()
-            
-            # checks if the board is solved, if so the current depth level of solution is updated
-            if new_state.is_solved():
-                # print(self.archieve[new_state][0])
-                self.current_best = self.archieve[new_state][1]
-                print(self.current_best)
-    
-            for potential_moves in new_state.get_next_configurations():
-                 # a new board state is created based on the potential configurations
-                following_state = State(potential_moves, self.size)
-
-                # only if new state is not in the set or if its depth level exceeds the current solution, parameters are updated
-                if following_state in self.visitedset or self.archieve[new_state][1] >= self.current_best - 1:
-                    pass
-                else:
-                    # includes the new board state in the dictionary, with the its parent state and depth level as value           
-                    self.archieve[following_state] = [new_state, self.archieve[new_state][1]+1]
-                    
-                    # new board put into the stack                   
-                    self.visitedset.add(following_state)
-                    
-                    # new board put into the visited set
-                    self.stack.append(following_state)
-        return self.current_best
-
+   
     def backtrace(self, end_board: State) -> List[State]:
         boardslist = [end_board]
 
@@ -137,8 +99,8 @@ class Depthfirst:
         return boardslist
 
 
-    def get_end_board(self) -> State:
-        return self.end_board 
+    def visited_states(self) -> int:
+        return len(self.visitedset) 
     
 
                  
