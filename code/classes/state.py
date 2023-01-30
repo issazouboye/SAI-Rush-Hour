@@ -32,42 +32,50 @@ class State:
 
     def get_next_configurations(self) -> List[dict[Car]]:
 
-        # List filled with sets of car objects 
-        configurations = []         
+        # List filled with sets of car objects
+        configurations = []
 
         for car in self.cars:
 
-            # Check for horizontal cars 
+            # Check for horizontal cars
             if car.orientation == "H":
 
-                # Check if you can move to the left 
-                if car.is_movable("left", self.board):                     
-                    car.move_left() 
-                    configurations.append(copy.deepcopy(self.cars)) 
-                    car.move_right()                 
+                # Check if you can move to the left
+                if car.is_movable("left", self.board):
+                    moved_car = car.move_left()
+                    new_cars = dict(self.cars)
+                    del new_cars[car]
+                    new_cars[moved_car] = ""
+                    configurations.append(new_cars)
 
-                # Check if you can move to the right 
-                if car.is_movable("right", self.board):                     
-                    car.move_right() 
-                    configurations.append(copy.deepcopy(self.cars)) 
-                    car.move_left()                 
+                # Check if you can move to the right
+                if car.is_movable("right", self.board):
+                    moved_car = car.move_right()
+                    new_cars = dict(self.cars)
+                    del new_cars[car]
+                    new_cars[moved_car] = ""
+                    configurations.append(new_cars)
 
-            # Check for vertical cars 
+            # Check for vertical cars
             if car.orientation == "V":
 
-                # Check if you can move up 
-                if car.is_movable("up", self.board):                    
-                    car.move_up()                      
-                    configurations.append(copy.deepcopy(self.cars)) 
-                    car.move_down()                    
+                # Check if you can move up
+                if car.is_movable("up", self.board):
+                    moved_car = car.move_up()
+                    new_cars = dict(self.cars)
+                    del new_cars[car]
+                    new_cars[moved_car] = ""
+                    configurations.append(new_cars)
 
-                # Check if you can move down 
-                if car.is_movable("down", self.board):                    
-                    car.move_down() 
-                    configurations.append(copy.deepcopy(self.cars)) 
-                    car.move_up()                    
+                # Check if you can move down
+                if car.is_movable("down", self.board):
+                    moved_car = car.move_down()
+                    new_cars = dict(self.cars)
+                    del new_cars[car]
+                    new_cars[moved_car] = ""
+                    configurations.append(new_cars)
 
-        return configurations 
+        return configurations
     
     def blockingcars(self) -> int:
         column = len(self.board) - 1
