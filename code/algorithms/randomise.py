@@ -65,15 +65,15 @@ class Random_solver_v2:
 
                 if direction == "left" and new_car.is_movable(direction, self.board):
                     moved_car = new_car.move_left()                                                         
-                    self.cars.remove(new_car)
-                    self.cars.add(moved_car)                                             
+                    del self.cars[new_car]
+                    self.cars[moved_car] = ""                                            
                     self.steps += 1
                     move_made = True 
 
                 elif direction == "right" and new_car.is_movable(direction, self.board):
                     moved_car = new_car.move_right()                                                         
-                    self.cars.remove(new_car)
-                    self.cars.add(moved_car)                                             
+                    del self.cars[new_car]
+                    self.cars[moved_car] = ""                                          
                     self.steps += 1 
                     move_made = True
 
@@ -82,15 +82,15 @@ class Random_solver_v2:
 
                 if direction == "up" and new_car.is_movable(direction, self.board):
                     moved_car = new_car.move_up()                                                         
-                    self.cars.remove(new_car)
-                    self.cars.add(moved_car)                                             
+                    del self.cars[new_car]
+                    self.cars[moved_car] = ""                                             
                     self.steps += 1
                     move_made = True 
 
                 elif direction == "down" and new_car.is_movable(direction, self.board):
                     moved_car = new_car.move_down()                                                         
-                    self.cars.remove(new_car)
-                    self.cars.add(moved_car)                                             
+                    del self.cars[new_car]
+                    self.cars[moved_car] = ""                                             
                     self.steps += 1
                     move_made = True 
 
