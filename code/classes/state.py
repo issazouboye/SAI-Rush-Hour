@@ -92,7 +92,10 @@ class State:
         for i in range(len(self.board)-1):
             if self.board[ceil(len(self.board) / 2) - 1 ][i] == "X":
                 distance = len(self.board) - 2 - i 
-        return distance          
+        return distance  
+
+    def blockingdistance(self) -> int:
+        return (self.blockingcars() + self.reddistance())      
 
     def is_solved(self) -> bool:
         for car in self.cars:

@@ -1,1 +1,6 @@
 algorithm,visited boards,number of steps
+Random,5,1
+BreadthFirst,6,2
+DepthFirst,7,3
+BlockingCars,8,4
+Distance,9,5
