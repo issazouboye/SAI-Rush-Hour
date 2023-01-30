@@ -26,8 +26,8 @@ class Board:
         board = [["0" for i in range(self.size)] for j in range(self.size)]
         self.board: npt.NDArray[np.str_] = np.array(board)
 
-        # Set with cars 
-        self.cars: Set[Car] = set()        
+        # Dictionary with cars 
+        self.cars: dict = {}        
     
     def load_board(self, filename: str) -> None:  
         """
@@ -48,7 +48,7 @@ class Board:
                 length = int(splits[4])  
 
                 car = Car(name, orientation, column, row, length) 
-                self.cars.add(car)                                  
+                self.cars[car] = ""                                
         
         # Place the cars on the board 
         for car in self.cars:
