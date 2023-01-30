@@ -29,9 +29,9 @@ class Car:
         self.length = length 
 
     def is_movable(self, direction: str, board: npt.NDArray[np.str_]) -> bool:
-    """
-    A function that returns a boolean to see if a car object can move.
-    """
+        """
+        A function that returns a boolean to see if a car object can move.
+        """
         # if the car's orientation is horizontal, it can only move left or right
         if self.orientation == "H":
             if direction == "left":
