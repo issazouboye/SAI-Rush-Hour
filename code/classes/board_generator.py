@@ -72,7 +72,8 @@ class RandomBoard:
                     new_car = Car(car_name, orientation, col, row, car_length)  
                     self.cars.add(new_car)                  
                     self.place_car(new_car)
-                    car_placed = True                                    
+                    car_placed = True 
+                    attempts = 0                                   
             
             if orientation == "V":
                 col = random.randint(0, self.size - 1)
@@ -83,7 +84,8 @@ class RandomBoard:
                     new_car = Car(car_name, orientation, col, row, car_length)  
                     self.cars.add(new_car)                  
                     self.place_car(new_car)
-                    car_placed = True                    
+                    car_placed = True 
+                    attempts = 0                   
             
             if car_placed == False:
                 attempts += 1 
