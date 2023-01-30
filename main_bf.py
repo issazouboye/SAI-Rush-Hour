@@ -2,6 +2,7 @@ from code.classes.board import Board
 from code.classes.state import State
 from code.algorithms.breadth_first import BreadthFirst 
 from code.algorithms.blockingbestfirst import BlockingBestFirst
+from code.algorithms.randomise import Random_solver_v2
 
 
 import time 
@@ -27,14 +28,22 @@ if __name__ == "__main__":
         writer.writerow(row)
         algorithmlist = ["Random","BreadthFirst", "DepthFirst", "BlockingCars", "Distance", "Branch and Bound"]
         randomlist = []
-        BreadthFirstlist = []
-        for i in range(5):
+        breadthfirstlist = []
+        depthfirstlist = []
+        blockingcarslist = []
+        distancelist = []
+        branchandboundlist = []
+        
+        for i in range(10):
             first_state = State(initial_cars, 6) 
             bf = BlockingBestFirst(first_state, 6) 
+            random = Random_solver_v2(first_state)
             bf.run()
+            random.run()
             # randomlist.append(Random.visitedboards())
-            BreadthFirstlist.append(len(bf.visited))
-            BreadthFirstlist.append(bf.steps)
+            breadthfirstlist.append(len(bf.visited))
+            breadthfirstlist.append(bf.steps)
+            randomlist.append(Random_solver_v2.step_count)
 
         
         
