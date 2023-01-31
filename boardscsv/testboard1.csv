@@ -1,5 +1,5 @@
 algorithm,visited boards,number of steps,best solution
-Random,11570.0,11570.0,1963
+Random,13127.19,13127.19,720
 BreadthFirst,633,35,35
 DepthFirst,453,123,123
 BlockingCars,570,35,35

@@ -98,7 +98,7 @@ class Random_solver_v2:
                 self.board = self.get_updated_board(moved_car, old_column, old_row)                                                 
 
             if self.is_solved():                 
-                print(f"It took {self.steps} steps to solve this game") 
+                # print(f"It took {self.steps} steps to solve this game") 
                 break
 
     def get_updated_board(self, moved_car: Car, old_column: int, old_row: int) -> npt.NDArray[np.str_]:

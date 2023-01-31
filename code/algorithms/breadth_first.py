@@ -68,7 +68,7 @@ class BreadthFirst:
 
                 # If board is solved return result
                 if new_board.is_solved():
-                    print(f"It took {self.steps} steps to solve this game") 
+                    # print(f"It took {self.steps} steps to solve this game") 
                     return new_board
 
                 # Add all possible next boards to queue, if they're not in visited set       
