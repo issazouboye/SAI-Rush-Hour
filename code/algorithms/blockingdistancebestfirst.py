@@ -70,13 +70,13 @@ class BlockingDistanceBestFirst:
             for configuration in next_configurations:
                 # Stores new board configuration
                 next_board = State(configuration, self.size)
-                # stores amount of blocking cars and steps combined
+                # Stores amount of blocking cars and steps combined
                 blockingdist = next_board.blockingdistance() + self.steps
 
                 if next_board not in self.visited:
-                    # pushes the new board in a priority queue
+                    # Pushes the new board in a priority queue
                     heapq.heappush(self.boards_queue, (blockingdist, self.steps + 1, next_board))
-                    # puts new board in visited set
+                    # Puts new board in visited set
                     self.visited.add(next_board) 
             
 
