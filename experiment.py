@@ -18,20 +18,20 @@ import copy
 def boardcsv():
 
     start = time.time()
-    initial_board = Board(9)
-    initial_board.load_board("data/Rushhour9x9_6.csv") 
+    initial_board = Board(12)
+    initial_board.load_board("data/Rushhour12x12_7.csv") 
     initial_cars = initial_board.get_initial_cars()
     print(time.time() - start)
 
-    with open('boardscsv/board6.csv', 'w') as f:
+    with open('boardscsv/board7.csv', 'w') as f:
         writer = csv.writer(f)
         row = ["algorithm", "visited boards", "number of steps", "best solution"]
         writer.writerow(row)
         algorithmlist = ["Random"]
         randomlist = []
-        first_state = State(initial_cars, 9) 
+        first_state = State(initial_cars, 12) 
         random = Random_solver_v1(first_state)
-        for i in range(1000):
+        for i in range(100):
             
             newrandom = copy.deepcopy(random)
             newrandom.run()
@@ -55,8 +55,8 @@ def boardcsv():
         
         
         randomlist.sort()
-        visitedboards = [sum(randomlist)/1000]
-        steps = [sum(randomlist)/1000] 
+        visitedboards = [sum(randomlist)/100]
+        steps = [sum(randomlist)/100] 
         bestvalue = [randomlist[0]]
         for i in range(1):
             rowvar = [algorithmlist[i],visitedboards[i], steps[i], bestvalue[i]]
@@ -64,9 +64,9 @@ def boardcsv():
        
         bins=np.arange(0, 50000, 500)
         plt.hist(randomlist, color = "lightblue", edgecolor='black', bins = bins)
-        plt.title('Rush Hour Board 5')
+        plt.title('Rush Hour Board 7')
         plt.xlabel('Amount of Steps To Solve')
         plt.ylabel('Frequencey')
-        plt.savefig('Experiment_1000_board_5.png')
+        plt.savefig('Experiment_1000_board_7.png')
 
 boardcsv()
