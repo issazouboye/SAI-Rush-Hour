@@ -62,7 +62,7 @@ This repository contains 4 main folders. The following tables gives a summary of
 **Visualization**:
 | File          | Summary           |
 | ------------- |:-------------:|
-|Visualization Folder            | Creates a GIF of the different movements taken to solve the puzzle. Inspiration of code from|
+|Visualization Folder            | Creates a GIF of the different movements taken to solve the puzzle. Inspiration of code from the forest fire assignment.|
 
 
 
