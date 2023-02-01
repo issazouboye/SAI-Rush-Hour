@@ -47,10 +47,10 @@ class State:
         return self.board
 
     def get_next_configurations(self) -> List[List[Car]]:
-    """
-    A function that checks which car objects can potentially move based
-    on their orientation and whether there is any available space.
-    """
+        """
+        A function that checks which car objects can potentially move based
+        on their orientation and whether there is any available space.
+        """
         # List filled with sets of car objects
         configurations = []
 
@@ -106,7 +106,7 @@ class State:
         return numberofcars 
 
     def reddistance(self) -> int:
-       """
+        """
         A function that checks the distance between the red car and the exit.
         """ 
         column = 0

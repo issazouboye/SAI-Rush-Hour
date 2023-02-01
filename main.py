@@ -1,3 +1,12 @@
+"""
+Program: main.py
+
+Course: Algoritmen en Heuristieken
+
+Students: Issa Zouboye, Alex van Diepen, Shreyas Potdar
+
+Description: This file asks the user which board they want to solve, and with which algorithm. 
+"""
 from code.classes.board import Board
 from code.classes.board_generator import RandomBoard
 from code.classes.state import State
