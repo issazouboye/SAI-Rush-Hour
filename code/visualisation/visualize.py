@@ -1,3 +1,14 @@
+"""
+Program: visualize.py
+
+Course: Algoritmen en Heuristieken
+
+Students: Issa Zouboye, Alex van Diepen, Shreyas Potdar
+
+Description: This is the program that has been taken from the forest fire
+             project as part of the Programming Project course given in the 
+             Programming Minor at the University of Amsterdam.
+"""
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import colors as c

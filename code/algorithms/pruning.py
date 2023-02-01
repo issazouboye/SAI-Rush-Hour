@@ -30,8 +30,8 @@ class Pruning:
         self.size = size
 
         # Dictionary to keep track of each state's depth level and previous state
-        self.archieve = {}
-        self.archieve[cars_set] = [0, 0]
+        self.archive = {}
+        self.archive[cars_set] = [0, 0]
 
         # Initializes a stack and includes the initial state in the stack
         self.stack = []
@@ -60,18 +60,18 @@ class Pruning:
             
             # Checks if the board is solved, if so the current depth level of solution is updated
             if new_state.is_solved():
-                self.current_best = self.archieve[new_state][1]
+                self.current_best = self.archive[new_state][1]
     
             for potential_moves in new_state.get_next_configurations():
                 # A new board state is created based on the potential configurations
                 following_state = State(potential_moves, self.size)
 
                 # Only if new state is not in the set or if its depth level exceeds the current solution, parameters are updated
-                if following_state in self.visitedset or self.archieve[new_state][1] >= self.current_best - 1:
+                if following_state in self.visitedset or self.archive[new_state][1] >= self.current_best - 1:
                     pass
                 else:
                     # Includes the new board state in the dictionary, with the its parent state and depth level as value           
-                    self.archieve[following_state] = [new_state, self.archieve[new_state][1]+1]
+                    self.archive[following_state] = [new_state, self.archive[new_state][1]+1]
                     
                     # New board put into the stack                   
                     self.visitedset.add(following_state)

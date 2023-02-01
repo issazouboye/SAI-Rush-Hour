@@ -29,8 +29,8 @@ class Depthfirst:
         self.size = size
 
         # Dictionary to keep track of each state's depth level and previous state
-        self.archieve = {}
-        self.archieve[cars_set] = [0, 0]
+        self.archive = {}
+        self.archive[cars_set] = [0, 0]
 
         # Initializes a stack and includes the initial state in the stack
         self.stack = []
@@ -58,7 +58,7 @@ class Depthfirst:
 
             # Checks if the board is solved, if so the result is returned
             if new_state.is_solved():
-                return self.archieve[new_state][1]   
+                return self.archive[new_state][1]   
             
             # If the board is not solved, all potential configurations are added to the stack
             for potential_moves in new_state.get_next_configurations():
@@ -67,7 +67,7 @@ class Depthfirst:
 
                 if following_state not in self.visitedset:  
                     # Includes the new board state in the dictionary, with the its parent state and depth level as value           
-                    self.archieve[following_state] = [new_state, self.archieve[new_state][1]+1]
+                    self.archive[following_state] = [new_state, self.archive[new_state][1]+1]
                     
                     # New board put into the stack
                     self.stack.append(following_state)
@@ -84,7 +84,7 @@ class Depthfirst:
         boardslist = [end_board]
 
         while boardslist[-1] != 0:
-            boardslist.append(self.archieve[boardslist[-1]][0])
+            boardslist.append(self.archive[boardslist[-1]][0])
 
         boardslist.pop()
         boardslist.reverse()

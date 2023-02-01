@@ -1,10 +1,27 @@
+"""
+Program: get_visualization.py
+
+Course: Algoritmen en Heuristieken
+
+Students: Issa Zouboye, Alex van Diepen, Shreyas Potdar
+
+Description: This is the program that keeps track of all of the steps 
+             taken to to solve the rush hour puzzle and creates a visualization
+             from it.
+"""
 from .visualize import visualize
 from ..classes.state import State
 from ..classes.board import Board
 from ..algorithms.breadth_first import BreadthFirst
+from typing import Optional, List
 
 
-def backtrace(archive: dict, end_board: State):
+
+def backtrace(archive: dict, end_board: State) -> List[State]:
+    """
+    A function that shows keeps track of all of the steps taken for the depth first
+    algorithm.
+    """
     boardslist = [end_board]
 
     while boardslist[-1] != 0:
