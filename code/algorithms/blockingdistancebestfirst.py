@@ -27,13 +27,13 @@ class BlockingDistanceBestFirst:
         Initializes the first board, a visited set, the amount of steps
         and a priority queue on number of cars that block the red car
         """
-        # stores first board
+        # Stores first board
         self.first_state = first_state
-        # stores amount of blocking cars in first board
+        # Stores amount of blocking cars in first board
         self.first_score = first_state.blockingdistance()
-        # stores size of board
+        # Stores size of board
         self.size = size 
-        # stores amount of steps
+        # Stores amount of steps
         self.steps = 0
 
         # Initialize a queue 
@@ -68,7 +68,7 @@ class BlockingDistanceBestFirst:
             next_configurations = board.get_next_configurations()
 
             for configuration in next_configurations:
-                # stores new board configuration
+                # Stores new board configuration
                 next_board = State(configuration, self.size)
                 # stores amount of blocking cars and steps combined
                 blockingdist = next_board.blockingdistance() + self.steps
