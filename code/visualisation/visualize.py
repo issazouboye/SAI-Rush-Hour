@@ -18,16 +18,13 @@ def visualize(grid_values:List[np.ndarray], showplot:bool=True, saveplot:bool=Fa
         saveplot (bool, optional): saves the visualization as a gif. Defaults to False.
         filename (str, optional): filename used to save animation. Defaults to 'simulation_animation'.
         colors (List[str], optional): colors used in animation. Length of list must correspond with number of
-                                      unique values in grid (i.e. the number of unique states).
-                                      Defaults to ['black', 'green', 'red'].
+                                      unique values in grid (i.e. the number of unique states).                                      
     """
     grid_values = np.vectorize(lambda x: ord(x) - ord('A'))(grid_values[:])
 
     # Set up figure and colors
     fig = plt.figure(figsize=(8,8))
-    cmap = c.ListedColormap(colors)
-    
-    # (ord(car_character) - ord('A')) % 3
+    cmap = c.ListedColormap(colors)   
 
     # Plot frames
     ims = [[plt.imshow(grid, vmin=0, vmax=len(colors), cmap=cmap, animated=True)] for grid in grid_values]
