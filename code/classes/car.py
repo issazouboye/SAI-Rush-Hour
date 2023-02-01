@@ -115,6 +115,9 @@ class Car:
         return hash(self.__str__())
 
     def __eq__(self, other) -> bool:
+       """
+        A function that enables you to compare whther two car objects are the same.
+        """
         return isinstance(other, Car) 
 
             

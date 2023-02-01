@@ -18,8 +18,11 @@ import numpy.typing as npt
 
 
 class State:
-
-    def __init__(self, cars: dict[Car], size: int) -> None:
+    """
+    A function utilizes a list of car objects to identify the location of the
+    car objects in the grid.
+    """
+    def __init__(self, cars: List[Car], size: int) -> None:
         self.cars = cars
         self.size = size
         board = [["0" for i in range(self.size)] for j in range(self.size)]
@@ -27,7 +30,10 @@ class State:
         self.create_board()
 
     def create_board(self) -> npt.NDArray[np.str_]:
-
+    """
+    A function that creates the rush hour grid based on the 
+    location of each of the car objects in the list given as input
+    """
         # Place the cars on the board
         for car in self.cars:
             if car.orientation == "H":
@@ -41,7 +47,10 @@ class State:
         return self.board
 
     def get_next_configurations(self) -> List[List[Car]]:
-
+    """
+    A function that checks which car objects can potentially move based
+    on their orientation and whether there is any available space.
+    """
         # List filled with sets of car objects
         configurations = []
 
@@ -84,6 +93,10 @@ class State:
         return configurations
     
     def blockingcars(self) -> int:
+        """
+        A function that checks how many cars are blocking the red car
+        on the rush hour grid.
+        """ 
         column = len(self.board) - 1
         numberofcars = 0
         while self.board[ceil(len(self.board) / 2) - 1 ][column] != "X":
@@ -93,6 +106,9 @@ class State:
         return numberofcars 
 
     def reddistance(self) -> int:
+       """
+        A function that checks the distance between the red car and the exit.
+        """ 
         column = 0
         distance = 0
         for i in range(len(self.board)-1):
@@ -101,9 +117,17 @@ class State:
         return distance  
 
     def blockingdistance(self) -> int:
+        """
+        A function that returns the sum of the cars blocking the exit
+        and the distance between the red car and the exit.
+        """ 
         return (self.blockingcars() + self.reddistance())      
 
     def is_solved(self) -> bool:
+        """
+        A function that returns a True if the rush hour puzzle is solved by
+        checking if the red car is at the exit.
+        """ 
         for car in self.cars:
             winning_column = self.size - 2
             winning_row = ceil(self.size / 2) - 1
@@ -113,22 +137,43 @@ class State:
 
         return False
 
-    def get_cars(self) -> Set[Car]:
+    def get_cars(self) -> List[Car]:
+        """
+        A function that returns a list of car objects with their
+        current characteristcs.
+        """ 
         return self.cars
 
     def get_board(self) -> npt.NDArray[np.str_]:
+        """
+        A function that returns the np array 
+        """
         return self.board
+ 
 
     def get_size(self) -> int:
+        """
+        A function that returns the size of the grid.
+        """
         return self.size
 
     def __hash__(self) -> int:
+        """
+        A function that gives a hash value based on the string representation of the 
+        current state which makes it possible to put a state in a set or dictionary.
+        """
         return hash(self.__repr__())
 
     def __repr__(self) -> str:
+        """
+        A function that gives a hash value based on the string representation of the current state.
+        """
         printable_board = np.array_str(self.board)
 
         return printable_board
 
     def __eq__(self, other: object) -> bool:
+        """
+        A function that enables you to comapre whether two states are the same.
+        """
         return isinstance(other, State)

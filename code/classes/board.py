@@ -63,7 +63,7 @@ class Board:
  
     def get_initial_cars(self) -> List[Car]:
         """
-        A function that returns the set of car objects with stored
+        A function that returns the list of car objects with stored
         characteristics from the csv file. 
         """
         return self.cars 
