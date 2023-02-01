@@ -1,5 +1,3 @@
-from car import Car
-from board_random import *
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import colors as c
@@ -7,7 +5,6 @@ import matplotlib.animation as animation
 from typing import List
 
 color_list = ["white","indigo","maroon","lightblue","black","lavender", "darkgreen","darkblue", "lightseagreen","tomato", "darkorange", "yellowgreen", "chocolate", "orange", "purple","teal", "sienna", "pink", "olive", "yellow","blue","green", "brown",'red']
-# color_list = ["white","indigo","maroon", "lightblue","black","lavender", "darkgreen","darkblue", "lightseagreen", "tomato", "darkorange", "yellowgreen", "chocolate", "orange", "purple","teal", "sienna", "pink", "olive", "yellow","blue","green", "gold", "silver", "brown",'red']
 
 
 def visualize(grid_values:List[np.ndarray], showplot:bool=True, saveplot:bool=False,
