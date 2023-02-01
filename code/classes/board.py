@@ -27,7 +27,7 @@ class Board:
         self.board: npt.NDArray[np.str_] = np.array(board)
 
         # Dictionary with cars 
-        self.cars: dict = {}        
+        self.cars: list = []       
     
     def load_board(self, filename: str) -> None:  
         """
@@ -48,7 +48,7 @@ class Board:
                 length = int(splits[4])  
 
                 car = Car(name, orientation, column, row, length) 
-                self.cars[car] = ""                                
+                self.cars.append(car)                                
         
         # Place the cars on the board 
         for car in self.cars:
@@ -59,10 +59,7 @@ class Board:
             if car.orientation == "V":
                 for i in range(car.length):
                     self.board[car.row + i][car.column] = car.name 
-
-        # print("First board:")
-        # print(self.board)
-        # print() 
+ 
 
     def get_initial_cars(self) -> Set[Car]:
         """

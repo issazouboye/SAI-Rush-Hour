@@ -35,7 +35,7 @@ class State:
         # List filled with sets of car objects
         configurations = []
 
-        for car in self.cars:
+        for index, car in enumerate(self.cars):
 
             # Check for horizontal cars
             if car.orientation == "H":
@@ -43,17 +43,15 @@ class State:
                 # Check if you can move to the left
                 if car.is_movable("left", self.board):
                     moved_car = car.move_left()
-                    new_cars = dict(self.cars)
-                    del new_cars[car]
-                    new_cars[moved_car] = ""
+                    new_cars = list(self.cars)
+                    new_cars[index] = moved_car                    
                     configurations.append(new_cars)
 
                 # Check if you can move to the right
                 if car.is_movable("right", self.board):
                     moved_car = car.move_right()
-                    new_cars = dict(self.cars)
-                    del new_cars[car]
-                    new_cars[moved_car] = ""
+                    new_cars = list(self.cars)
+                    new_cars[index] = moved_car                   
                     configurations.append(new_cars)
 
             # Check for vertical cars
@@ -62,17 +60,15 @@ class State:
                 # Check if you can move up
                 if car.is_movable("up", self.board):
                     moved_car = car.move_up()
-                    new_cars = dict(self.cars)
-                    del new_cars[car]
-                    new_cars[moved_car] = ""
+                    new_cars = list(self.cars)
+                    new_cars[index] = moved_car                   
                     configurations.append(new_cars)
 
                 # Check if you can move down
                 if car.is_movable("down", self.board):
                     moved_car = car.move_down()
-                    new_cars = dict(self.cars)
-                    del new_cars[car]
-                    new_cars[moved_car] = ""
+                    new_cars = list(self.cars)
+                    new_cars[index] = moved_car                    
                     configurations.append(new_cars)
 
         return configurations
