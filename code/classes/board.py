@@ -15,6 +15,7 @@ from .car import Car
 from typing import List
 import numpy.typing as npt
 
+
 class Board:
 
     def __init__(self, size: int) -> None:
@@ -34,7 +35,7 @@ class Board:
         A function that loads data from a csv file and creates
         Car objects and places the cars on the board.
         """
-        # Read the data
+        # Reads the data
         with open(filename, 'r') as f:
             next(f) 
 
@@ -60,8 +61,7 @@ class Board:
                 for i in range(car.length):
                     self.board[car.row + i][car.column] = car.name 
  
-
-    def get_initial_cars(self) -> Set[Car]:
+    def get_initial_cars(self) -> List[Car]:
         """
         A function that returns the set of car objects with stored
         characteristics from the csv file. 

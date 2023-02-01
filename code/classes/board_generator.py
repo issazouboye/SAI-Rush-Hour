@@ -1,3 +1,12 @@
+"""
+Program: board_generator.py
+
+Course: Algoritmen en Heuristieken
+
+Students: Issa Zouboye, Alex van Diepen, Shreyas Potdar
+
+Description: This is a algorithm that generates a random rush hour puzzle.
+"""
 from __future__ import annotations 
 from ..classes.car import Car
 from math import ceil 

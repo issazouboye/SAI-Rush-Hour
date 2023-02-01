@@ -1,3 +1,14 @@
+"""
+Program: state.py
+
+Course: Algoritmen en Heuristieken
+
+Students: Issa Zouboye, Alex van Diepen, Shreyas Potdar
+
+Description: A class that creates the board with the given list of cars and gives you 
+            the possibility to get the next configurations/states of the board.
+"""
+
 from __future__ import annotations
 import numpy as np
 from math import ceil
@@ -29,7 +40,7 @@ class State:
 
         return self.board
 
-    def get_next_configurations(self) -> List[dict[Car]]:
+    def get_next_configurations(self) -> List[List[Car]]:
 
         # List filled with sets of car objects
         configurations = []
