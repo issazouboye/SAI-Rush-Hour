@@ -77,6 +77,10 @@ class Depthfirst:
 
    
     def backtrace(self, end_board: State) -> List[State]:
+        """
+        A function that shows keeps track of all of the steps taken for the depth first
+        algorithm.
+        """
         boardslist = [end_board]
 
         while boardslist[-1] != 0:

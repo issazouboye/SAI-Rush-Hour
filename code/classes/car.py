@@ -107,6 +107,9 @@ class Car:
         return moved_car 
     
     def __str__(self):
+        """
+        A function that gives the string representation of the car objects.
+        """
         return f"{self.name}, {self.column}, {self.row}"
 
     def __hash__(self) -> int:
