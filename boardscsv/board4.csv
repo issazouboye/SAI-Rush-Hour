@@ -1,1 +1,7 @@
 algorithm,visited boards,number of steps,best solution
+Random,35612.859,35612.859,2558
+BreadthFirst,420478,51,51
+DepthFirst,162586,27223,27223
+Blocking,303330,51,51
+Distance,182905,51,51
+BlockingDistance,140718,51,51

@@ -36,7 +36,7 @@ class Random_solver_v1:
             self.steps += 1 
 
             if new_state.is_solved():                
-                print(f"It took {self.steps} steps to solve this game") 
+                # print(f"It took {self.steps} steps to solve this game") 
                 return new_state 
    
     def step_count(self) -> int:
