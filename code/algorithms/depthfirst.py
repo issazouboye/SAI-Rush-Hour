@@ -22,29 +22,28 @@ class Depthfirst:
         hour state such as the stack, set and dictionary.
         """
 
-        # stores the intial state of the rush hour configuration
+        # Stores the intial state of the rush hour configuration
         self.cars_set = cars_set
 
-        # stores the size of the board
+        # Stores the size of the board
         self.size = size
 
-        # dictionary to keep track of each state's depth level and previous state
+        # Dictionary to keep track of each state's depth level and previous state
         self.archieve = {}
         self.archieve[cars_set] = [0, 0]
 
-        # initializes a stack and includes the initial state in the stack
+        # Initializes a stack and includes the initial state in the stack
         self.stack = []
         self.stack.append(cars_set)
 
-        # initializes a set to keep up the board states already visuted
+        # Initializes a set to keep up the board states already visuted
         self.visitedset = set()
         
-        #including the initial state in the set
+        # Including the initial state in the set
         self.visitedset.add(cars_set)
 
         # variable to keep track of the depth level of a solved rush hour state
         self.current_best: int = float('inf')
-        
 
     def solve_board(self) -> State:
         """
@@ -52,33 +51,28 @@ class Depthfirst:
         to the rush hour game
         """
 
-        # alrgorithm that runs until the stack is empty or a solution is found
+        # Alrgorithm that runs until the stack is empty or a solution is found
         while len(self.stack) != 0:
             # Removal of the top most board configuration from the stack
             new_state = self.stack.pop()
 
-            # checks if the board is solved, if so the result is returned
+            # Checks if the board is solved, if so the result is returned
             if new_state.is_solved():
-                # print(f"It took {self.steps} steps to solve this game") 
-                # print("hello")
-                # print(self.archieve[new_state])
-
                 return self.archieve[new_state][1]   
             
-            # if the board is not solved, all potential configurations are added to the stack
+            # If the board is not solved, all potential configurations are added to the stack
             for potential_moves in new_state.get_next_configurations():
-                # a new board state is created based on the potential configurations
+                # A new board state is created based on the potential configurations
                 following_state = State(potential_moves, self.size)
-                
 
                 if following_state not in self.visitedset:  
-                    # includes the new board state in the dictionary, with the its parent state and depth level as value           
+                    # Includes the new board state in the dictionary, with the its parent state and depth level as value           
                     self.archieve[following_state] = [new_state, self.archieve[new_state][1]+1]
                     
-                    # new board put into the stack
+                    # New board put into the stack
                     self.stack.append(following_state)
 
-                    # new board put into the visited set
+                    # New board put into the visited set
                     self.visitedset.add(following_state)
 
    
@@ -90,26 +84,10 @@ class Depthfirst:
 
         boardslist.pop()
         boardslist.reverse()
-        print((boardslist[-1]))
-
         return boardslist
-
 
     def visited_states(self) -> int:
         return len(self.visitedset) 
-    
-
-                 
-
-
-
-
-
-
-                 
 
 
         
-
-            
-

@@ -30,10 +30,10 @@ class State:
         self.create_board()
 
     def create_board(self) -> npt.NDArray[np.str_]:
-    """
-    A function that creates the rush hour grid based on the 
-    location of each of the car objects in the list given as input
-    """
+        """
+        A function that creates the rush hour grid based on the 
+        location of each of the car objects in the list given as input
+        """
         # Place the cars on the board
         for car in self.cars:
             if car.orientation == "H":
