@@ -28,6 +28,10 @@ class RandomBoard:
 
     
     def generate_board(self):
+        """  
+        A function that places random cars on the board. If a car fits, a car object will be created and added in 
+        the cars list. 
+        """
 
         # Create list of car names 
         list_letters = list(ascii_uppercase)
