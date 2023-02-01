@@ -1,12 +1,12 @@
 """
-Program: experiment.py
+Program: output.py
 
 Course: Algoritmen en Heuristieken
 
 Students: Issa Zouboye, Alex van Diepen, Shreyas Potdar
 
-Description: This is a program that runs algorithms and heuristics 
-on boards of choice
+Description: This is a program that puts the output of a solution
+in a csv file
 """
 import numpy as np
 from ..classes.state import State
