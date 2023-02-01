@@ -1,10 +1,6 @@
 from __future__ import annotations 
-from car import Car 
-from board import Board 
-from state import State 
-from breadth_first import BreadthFirst 
+from ..classes.car import Car
 from math import ceil 
-import time
 import random
 from string import ascii_uppercase
 import numpy as np 
@@ -15,7 +11,7 @@ class RandomBoard:
 
     def __init__(self, size: int) -> None:        
         self.size = size        
-        self.cars = set() 
+        self.cars: list = [] 
         board = [["0" for i in range(self.size)] for j in range(self.size)]
         self.board: npt.NDArray[np.str_] = np.array(board)
         self.generate_board()        
@@ -37,7 +33,7 @@ class RandomBoard:
             self.board[red_car_row][red_car_col + i] = "X"
 
         red_car = Car("X", "H", red_car_col, red_car_row, 2) 
-        self.cars.add(red_car)         
+        self.cars.append(red_car)         
 
         # If the red car is placed almost at the winning position, make sure to place a blocking car 
         if red_car_col == self.size - 3:
@@ -47,7 +43,7 @@ class RandomBoard:
             orientation = "V" 
             car_length = random.choice([2,3])
             new_car = Car(car_name, orientation, car_col, car_row, car_length)
-            self.cars.add(new_car)
+            self.cars.append(new_car)
 
             for i in range(car_length):
                 self.board[car_row + i][car_col] = car_name         
@@ -61,7 +57,7 @@ class RandomBoard:
             car_placed = False
 
             orientation = random.choice(["H", "V"])
-            car_length = random.choice([2, 2, 2, 3, 3])
+            car_length = random.choice([2, 2, 2, 2, 3])
 
             if orientation == "H":
                 col = random.randint(0, self.size - car_length)
@@ -70,7 +66,7 @@ class RandomBoard:
                 if self.car_fits(orientation, col, row, car_length):
                     car_name = names_list.pop(0)
                     new_car = Car(car_name, orientation, col, row, car_length)  
-                    self.cars.add(new_car)                  
+                    self.cars.append(new_car)                  
                     self.place_car(new_car)
                     car_placed = True 
                     attempts = 0                                   
@@ -82,7 +78,7 @@ class RandomBoard:
                 if self.car_fits(orientation, col, row, car_length):                    
                     car_name = names_list.pop(0)
                     new_car = Car(car_name, orientation, col, row, car_length)  
-                    self.cars.add(new_car)                  
+                    self.cars.append(new_car)                  
                     self.place_car(new_car)
                     car_placed = True 
                     attempts = 0                   
@@ -130,23 +126,5 @@ class RandomBoard:
         return self.size 
     
 
-if __name__ == "__main__":
 
-    start = time.time()
-    
-    random_board = RandomBoard(6)
-    print(random_board.get_initial_board())
-    print()
-
-    initial_cars = random_board.get_initial_cars() 
-    print(f"Number of placed cars is {len(initial_cars)}")
-    print()
-
-    first_state = State(initial_cars, 6) 
-    bf = BreadthFirst(first_state, 6) 
-    end_state = bf.run()
-    print(end_state.get_board())
-    print(f"There were {len(bf.visited)} states visited")
-
-    print(time.time() - start)
  

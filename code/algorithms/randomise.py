@@ -48,7 +48,7 @@ class Random_solver_v2:
 
     def __init__(self, initial_state: State) -> None:
         self.initial_state = initial_state
-        self.cars = initial_state.get_cars()
+        self.cars = set(initial_state.get_cars())
         self.board = initial_state.get_board()
         self.steps = 0      
 
@@ -65,15 +65,15 @@ class Random_solver_v2:
 
                 if direction == "left" and new_car.is_movable(direction, self.board):
                     moved_car = new_car.move_left()                                                         
-                    del self.cars[new_car]
-                    self.cars[moved_car] = ""                                            
+                    self.cars.remove(new_car)
+                    self.cars.add(moved_car)                                             
                     self.steps += 1
                     move_made = True 
 
                 elif direction == "right" and new_car.is_movable(direction, self.board):
                     moved_car = new_car.move_right()                                                         
-                    del self.cars[new_car]
-                    self.cars[moved_car] = ""                                          
+                    self.cars.remove(new_car)
+                    self.cars.add(moved_car)                                           
                     self.steps += 1 
                     move_made = True
 
@@ -82,15 +82,15 @@ class Random_solver_v2:
 
                 if direction == "up" and new_car.is_movable(direction, self.board):
                     moved_car = new_car.move_up()                                                         
-                    del self.cars[new_car]
-                    self.cars[moved_car] = ""                                             
+                    self.cars.remove(new_car)
+                    self.cars.add(moved_car)                                               
                     self.steps += 1
                     move_made = True 
 
                 elif direction == "down" and new_car.is_movable(direction, self.board):
                     moved_car = new_car.move_down()                                                         
-                    del self.cars[new_car]
-                    self.cars[moved_car] = ""                                             
+                    self.cars.remove(new_car)
+                    self.cars.add(moved_car)                                             
                     self.steps += 1
                     move_made = True 
 
@@ -98,7 +98,7 @@ class Random_solver_v2:
                 self.board = self.get_updated_board(moved_car, old_column, old_row)                                                 
 
             if self.is_solved():                 
-                # print(f"It took {self.steps} steps to solve this game") 
+                print(f"It took {self.steps} steps to solve this game") 
                 break
 
     def get_updated_board(self, moved_car: Car, old_column: int, old_row: int) -> npt.NDArray[np.str_]:

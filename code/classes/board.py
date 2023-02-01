@@ -11,8 +11,8 @@ load the initial configuration of the rush hour game.
 
 from __future__ import annotations 
 import numpy as np 
-from .car import Car 
-from typing import Set
+from .car import Car
+from typing import List
 import numpy.typing as npt
 
 class Board:

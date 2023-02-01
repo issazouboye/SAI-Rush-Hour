@@ -10,11 +10,7 @@ algorithm to solve a rush hour game
 """
 from __future__ import annotations
 
-import sys
-sys.path.append("..")
-# from visualize import visualize
 from ..classes.state import State
-from ..classes.board import Board 
 from typing import Optional, List
 
 
@@ -104,17 +100,7 @@ class Depthfirst:
     
 
                  
-if __name__ == "__main__":
-    initial_board = board.Board(6)
-    initial_board.load_board("data\Rushhour6x6_1.csv")
 
-    initial_cars = initial_board.get_initial_cars() 
-    initial_board = initial_board.get_initial_board() 
-
-    state_test = State(initial_cars, 6)
-    df = Depthfirst(state_test, 6, 100)
-    end_board = df.solve_board()
-    df.backtrace(end_board)
 
 
 

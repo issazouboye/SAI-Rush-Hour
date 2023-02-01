@@ -80,15 +80,3 @@ class DistanceBestFirst:
                     self.visited.add(next_board) 
             
 
-
-if __name__ == "__main__":
-    start = time.time()
-    initial_board = Board(6)
-    initial_board.load_board("Rushhour6x6_2.csv") 
-    initial_cars = initial_board.get_initial_cars()
-
-    first_state = State(initial_cars, 6) 
-    bf = DistanceBestFirst(first_state, 6) 
-    bf.run()
-    print(time.time()- start)
-    

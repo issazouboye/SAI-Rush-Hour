@@ -11,7 +11,6 @@ to solve a rush hour game.
 from __future__ import annotations
 import numpy as np 
 import copy 
-from ..classes.board import Board
 from ..classes.state import State
 from collections import deque
 from math import ceil 
@@ -82,14 +81,5 @@ class BlockingBestFirst:
             
 
 
-if __name__ == "__main__":
-    start = time.time()
-    initial_board = Board(6)
-    initial_board.load_board("Rushhour6x6_2.csv") 
-    initial_cars = initial_board.get_initial_cars()
 
-    first_state = State(initial_cars, 6) 
-    bf = BlockingBestFirst(first_state, 6) 
-    bf.run()
-    print(time.time()- start)
     

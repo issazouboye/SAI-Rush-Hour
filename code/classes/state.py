@@ -2,10 +2,9 @@ from __future__ import annotations
 import numpy as np
 from math import ceil
 from .car import Car
-from .board import Board
-from typing import Set, List
+from typing import List
 import numpy.typing as npt
-import copy
+
 
 class State:
 

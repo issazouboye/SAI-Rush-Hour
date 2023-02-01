@@ -10,7 +10,6 @@ algorithm to solve a rush hour game
 """
 
 from __future__ import annotations 
-from ..classes.board import Board 
 from ..classes.state import State 
 from collections import deque
 import time
@@ -88,17 +87,5 @@ class BreadthFirst:
             self.steps += 1
 
 
-if __name__ == "__main__":
 
-    start = time.time()
-
-    initial_board = Board(6)
-    initial_board.load_board("data/Rushhour6x6_1.csv") 
-    initial_cars = initial_board.get_initial_cars()
-
-    first_state = State(initial_cars, 6) 
-    bf = BreadthFirst(first_state, 6) 
-    bf.run()
-
-    print(time.time() - start)
     
