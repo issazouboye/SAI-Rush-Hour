@@ -1,8 +1,8 @@
 algorithm,visited boards,number of steps,best solution
 Random,254.28,254.28,20
-BreadthFirst,4234,29,29
-DepthFirst,1701,450,450
-Blocking,4174,29,29
-Distance,3991,29,29
-BlockingDistance,3599,29,29
-Branch and Bound,5314,427,427
+BreadthFirst,4224,29,29
+DepthFirst,1899,477,477
+Blocking,4252,29,29
+Distance,4059,29,29
+BlockingDistance,3595,29,29
+DepthFirstPruning,4367,445,445

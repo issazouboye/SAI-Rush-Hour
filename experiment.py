@@ -6,7 +6,7 @@ from code.algorithms.distancebestfirst import DistanceBestFirst
 from code.algorithms.blockingdistancebestfirst import BlockingDistanceBestFirst
 from code.algorithms.randomise import Random_solver_v2, Random_solver_v1
 from code.algorithms.depthfirst import Depthfirst
-from code.algorithms.branch_and_bound import Branchandbound
+from code.algorithms.pruning import Pruning
 
 import numpy as np 
 import random 
@@ -15,58 +15,58 @@ import time
 import csv 
 import copy
 
-def boardcsv():
+def boardcsv(filename, boardname, size, randomcount):
 
     start = time.time()
-    initial_board = Board(12)
-    initial_board.load_board("data/Rushhour12x12_7.csv") 
+    initial_board = Board(size)
+    initial_board.load_board(filename) 
     initial_cars = initial_board.get_initial_cars()
     print(time.time() - start)
 
-    with open('boardscsv/board7.csv', 'w') as f:
+    with open(boardname, 'w') as f:
         writer = csv.writer(f)
         row = ["algorithm", "visited boards", "number of steps", "best solution"]
         writer.writerow(row)
-        algorithmlist = ["Random"]
+        algorithmlist = ["Random", "BreadthFirst", "BlockingBestFirst", "DistanceBestFirst", "BlockingDistanceBestFirst", "DepthFirst", "DepthFirstPruning"]
         randomlist = []
-        first_state = State(initial_cars, 12) 
-        random = Random_solver_v1(first_state)
-        for i in range(100):
+        first_state = State(initial_cars, size) 
+        random = Random_solver_v2(first_state)
+        for i in range(randomcount):
             
             newrandom = copy.deepcopy(random)
             newrandom.run()
             randomlist.append(newrandom.step_count())
             
-        # bf = BreadthFirst(first_state, 9)
-        # bf.run()
-        # bc = BlockingBestFirst(first_state, 9)
-        # bc.run()
-        # dc = DistanceBestFirst(first_state, 9)
-        # dc.run()
-        # bdc = BlockingDistanceBestFirst(first_state, 9)
-        # bdc.run()
+        bf = BreadthFirst(first_state, size)
+        bf.run()
+        bc = BlockingBestFirst(first_state, size)
+        bc.run()
+        dc = DistanceBestFirst(first_state, size)
+        dc.run()
+        bdc = BlockingDistanceBestFirst(first_state, size)
+        bdc.run()
 
-        # df = Depthfirst(first_state, 9)
-        # dfsteps = df.solve_board()
+        df = Depthfirst(first_state, size)
+        dfsteps = df.solve_board()
 
-        # bab = Branchandbound(first_state, 9)
-        # babsteps = bab.solve_board_branch_bound()
+        pru = Pruning(first_state, size)
+        prusteps = pru.solve_board
 
         
         
         randomlist.sort()
-        visitedboards = [sum(randomlist)/100]
-        steps = [sum(randomlist)/100] 
-        bestvalue = [randomlist[0]]
-        for i in range(1):
+        visitedboards = [sum(randomlist)/randomcount, len(bf.visited), len(bc.visited), len(dc.visited), len(bdc.visited), df.visited_states(), pru.visited_states()]
+        steps = [sum(randomlist)/randomcount, bf.steps, bc.steps, dc.steps, bdc.steps, df.solve_board(), pru.solve_board()] 
+        bestvalue = [randomlist[0], bf.steps, bc.steps, dc.steps, bdc.steps, df.solve_board(), pru.solve_board()]
+        for i in range(7):
             rowvar = [algorithmlist[i],visitedboards[i], steps[i], bestvalue[i]]
             writer.writerow(rowvar)
        
         bins=np.arange(0, 50000, 500)
         plt.hist(randomlist, color = "lightblue", edgecolor='black', bins = bins)
-        plt.title('Rush Hour Board 7')
+        plt.title('Rush Hour Board 1')
         plt.xlabel('Amount of Steps To Solve')
-        plt.ylabel('Frequencey')
-        plt.savefig('Experiment_1000_board_7.png')
+        plt.ylabel('Frequency')
+        plt.savefig('Experiment_1000_board_1.png')
 
-boardcsv()
+boardcsv("data/Rushhour6x6_1.csv", "boardscsv/board1.csv", 6, 1000)
