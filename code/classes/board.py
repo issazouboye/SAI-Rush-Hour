@@ -21,14 +21,14 @@ class Board:
     def __init__(self, size: int) -> None:
         """
         A function that initializes an np array to create a board
-        for the initial rush hour configuration.
+        for the initial rush hour configuration. 
         """
         self.size = size        
         board = [["0" for i in range(self.size)] for j in range(self.size)]
         self.board: npt.NDArray[np.str_] = np.array(board)
 
-        # Dictionary with cars 
-        self.cars: list = []       
+        # List with cars 
+        self.cars: List[Car] = []       
     
     def load_board(self, filename: str) -> None:  
         """

@@ -10,7 +10,6 @@ create car objects and saves its characteristics in the object. Furthermore
 it checks if a car object is movable in a certain direction. 
 """
 
-
 from __future__ import annotations 
 import numpy as np 
 import numpy.typing as npt
@@ -18,17 +17,24 @@ import numpy.typing as npt
 
 class Car:
     """
-    A function that initializes a variables that define a car object
+    Class that defines a car object for the Rush Hour game 
+
+    Attributes: 
+        name (str): name of the car 
+        orientation (str): direction the car is positioned in (vertical or horizontal)
+        column (int): column of car in the grid
+        row (int): row of the car in the grid 
+        length (int): length of the car (2 or 3)
     """
 
-    def __init__(self, name, orientation, column, row, length) -> None:
+    def __init__(self, name: str, orientation: str, column: int, row: int, length: int) -> None:
         self.name = name 
         self.orientation = orientation 
         self.column = column 
         self.row = row 
         self.length = length 
 
-    def is_movable(self, direction, board) -> bool:
+    def is_movable(self, direction: str, board: npt.NDArray[np.str_]) -> bool:
         """
         A function that checks if a car object can be moved based on 
         its orientation and returns a boolean.
@@ -66,7 +72,7 @@ class Car:
 
         return False     
 
-    def move_left(self):
+    def move_left(self) -> Car:
         """
         A function that creates a new car object located in the new 
         location of current car that has moved to the left.
@@ -76,7 +82,7 @@ class Car:
 
         return moved_car 
 
-    def move_right(self):
+    def move_right(self) -> Car:
         """
         A function that creates a new car object located in the new 
         location of the current car that has moved to the right.
@@ -86,7 +92,7 @@ class Car:
 
         return moved_car 
 
-    def move_up(self):
+    def move_up(self) -> Car:
         """
         A function that creates a new car object located in the new 
         location of the current car that has moved up.
@@ -96,7 +102,7 @@ class Car:
 
         return moved_car 
 
-    def move_down(self):
+    def move_down(self) -> Car:
         """
         A function that creates a new car object located in the new 
         location of the current car that has moved down.
@@ -106,7 +112,7 @@ class Car:
 
         return moved_car 
     
-    def __str__(self):
+    def __str__(self) -> str:
         """
         A function that gives the string representation of the car objects.
         """
@@ -118,10 +124,8 @@ class Car:
         """
         return hash(self.__str__())
 
-    def __eq__(self, other) -> bool:
+    def __eq__(self, other: object) -> bool:
         """
-        A function that enables you to compare whther two car objects are the same.
+        A function that enables you to compare whether two car objects are the same.
         """
-        return isinstance(other, Car) 
-
-            
+        return isinstance(other, Car)             

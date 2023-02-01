@@ -13,6 +13,7 @@ from ..classes.car import Car
 from math import ceil 
 import random
 from string import ascii_uppercase
+from typing import List 
 import numpy as np 
 import numpy.typing as npt
 
@@ -21,13 +22,12 @@ class RandomBoard:
 
     def __init__(self, size: int) -> None:        
         self.size = size        
-        self.cars: list = [] 
+        self.cars: List[Car] = [] 
         board = [["0" for i in range(self.size)] for j in range(self.size)]
         self.board: npt.NDArray[np.str_] = np.array(board)
         self.generate_board()        
 
-    
-    def generate_board(self):
+    def generate_board(self) -> None:
         """  
         A function that places random cars on the board. If a car fits, a car object will be created and added in 
         the cars list. 
@@ -39,7 +39,7 @@ class RandomBoard:
         list_double_letters = ["A"+letter for letter in ascii_uppercase] 
         names_list = list_letters + list_double_letters        
       
-        # Place the red car on the board in the middel of the board, but not at the exit position        
+        # Place the red car on the board in the middle of the board, but not at the exit position        
         red_car_col = random.randint(0, self.size - 3) 
         red_car_row = ceil(self.size / 2) - 1          
 
@@ -55,7 +55,7 @@ class RandomBoard:
             car_col = self.size - 1 
             car_row = ceil(self.size / 2) - 1 
             orientation = "V" 
-            car_length = random.choice([2,3])
+            car_length = random.choice([2, 3])
             new_car = Car(car_name, orientation, car_col, car_row, car_length)
             self.cars.append(new_car)
 
@@ -66,10 +66,11 @@ class RandomBoard:
         attempts = 0
         max_attempts = random.randint(5, 20)
 
-        # randomly place vehicles on the board
+        # Randomly place vehicles on the board
         while len(names_list) > 0: 
             car_placed = False
 
+            # Choose random orientation and car length 
             orientation = random.choice(["H", "V"])
             car_length = random.choice([2, 2, 2, 2, 3])
 
@@ -77,6 +78,7 @@ class RandomBoard:
                 col = random.randint(0, self.size - car_length)
                 row = random.randint(0, self.size - 1)
 
+                # Place car on board and in cars list if it fits
                 if self.car_fits(orientation, col, row, car_length):
                     car_name = names_list.pop(0)
                     new_car = Car(car_name, orientation, col, row, car_length)  
@@ -89,6 +91,7 @@ class RandomBoard:
                 col = random.randint(0, self.size - 1)
                 row = random.randint(0, self.size - car_length)
 
+                # Place car on board  and in cars list if it fits 
                 if self.car_fits(orientation, col, row, car_length):                    
                     car_name = names_list.pop(0)
                     new_car = Car(car_name, orientation, col, row, car_length)  
@@ -104,7 +107,7 @@ class RandomBoard:
             if attempts > max_attempts:
                 break         
 
-    def car_fits(self, orientation, col, row, car_length):
+    def car_fits(self, orientation: str, col: int, row: int, car_length: int) -> bool:
         """ 
         A function that checks if a car can be placed on the board 
         """
@@ -121,7 +124,7 @@ class RandomBoard:
         
         return True
     
-    def place_car(self, car: Car):
+    def place_car(self, car: Car) -> npt.NDArray[np.str_]:
         """  
         A function that places a Car object on the board
         """
@@ -136,26 +139,22 @@ class RandomBoard:
 
         return self.board 
     
-    def get_initial_cars(self):
+    def get_initial_cars(self) -> List[Car]:
         """
         A function that returns the list of car objects with stored
         characteristics from the csv file. 
         """
         return self.cars 
     
-    def get_initial_board(self):
+    def get_initial_board(self) -> npt.NDArray[np.str_]:
         """
         A function that returns the intial rush hour board.
         """
         return self.board  
 
-    def get_size(self):
+    def get_size(self) -> int:
         """
         A function that returns the size of the intial rush hour 
         board
         """
-        return self.size 
-    
-
-
- 
+        return self.size  

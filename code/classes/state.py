@@ -22,6 +22,7 @@ class State:
     A function utilizes a list of car objects to identify the location of the
     car objects in the grid.
     """
+
     def __init__(self, cars: List[Car], size: int) -> None:
         self.cars = cars
         self.size = size
@@ -49,9 +50,10 @@ class State:
     def get_next_configurations(self) -> List[List[Car]]:
         """
         A function that checks which car objects can potentially move based
-        on their orientation and whether there is any available space.
+        on their orientation and whether there is any available space. 
+        It stores all possible movements/configurations in a list. 
         """
-        # List filled with sets of car objects
+        # List filled with lists of car objects
         configurations = []
 
         for index, car in enumerate(self.cars):
@@ -99,10 +101,12 @@ class State:
         """ 
         column = len(self.board) - 1
         numberofcars = 0
-        while self.board[ceil(len(self.board) / 2) - 1 ][column] != "X":
-            if self.board[ceil(len(self.board) / 2) - 1 ][column] != "0":
+
+        while self.board[ceil(len(self.board) / 2) - 1][column] != "X":
+            if self.board[ceil(len(self.board) / 2) - 1][column] != "0":
                 numberofcars += 1
             column -= 1
+
         return numberofcars 
 
     def reddistance(self) -> int:
@@ -111,9 +115,11 @@ class State:
         """ 
         column = 0
         distance = 0
-        for i in range(len(self.board)-1):
-            if self.board[ceil(len(self.board) / 2) - 1 ][i] == "X":
+
+        for i in range(len(self.board) - 1):
+            if self.board[ceil(len(self.board) / 2) - 1][i] == "X":
                 distance = len(self.board) - 2 - i 
+
         return distance  
 
     def blockingdistance(self) -> int:
@@ -125,7 +131,7 @@ class State:
 
     def is_solved(self) -> bool:
         """
-        A function that returns a True if the rush hour puzzle is solved by
+        A function that returns True if the rush hour puzzle is solved by
         checking if the red car is at the exit.
         """ 
         for car in self.cars:
@@ -148,8 +154,7 @@ class State:
         """
         A function that returns the np array 
         """
-        return self.board
- 
+        return self.board 
 
     def get_size(self) -> int:
         """
@@ -166,7 +171,7 @@ class State:
 
     def __repr__(self) -> str:
         """
-        A function that gives a hash value based on the string representation of the current state.
+        A function that gives the string representation of state objects. 
         """
         printable_board = np.array_str(self.board)
 
