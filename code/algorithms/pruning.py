@@ -14,7 +14,7 @@ from ..classes.board import Board
 from typing import Optional, List
 
 
-class Branchandbound:
+class Pruning:
 
     def __init__(self, cars_set: State, size: int) -> None:
             """
@@ -46,7 +46,7 @@ class Branchandbound:
             # variable to keep track of the depth level of a solved rush hour state
             self.current_best: int = float('inf')
                 
-    def solve_board_branch_bound(self) -> int:
+    def solve_board(self) -> int:
             """
             A function that implements the branch and bound algorithm which is
             similar to the depth first implementation however in this case there 

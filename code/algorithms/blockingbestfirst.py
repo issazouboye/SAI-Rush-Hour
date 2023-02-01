@@ -59,8 +59,7 @@ class BlockingBestFirst:
                          
 
             # If board is solved return result
-            if board.is_solved():
-                print(f"It took {self.steps} steps to solve this game") 
+            if board.is_solved():                
                 return board 
 
             # Add all possible next boards to queue, if they're not in visited set 

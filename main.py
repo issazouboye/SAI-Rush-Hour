@@ -1,12 +1,13 @@
 from code.classes.board import Board
+from code.classes.board_generator import RandomBoard
 from code.classes.state import State
+from code.algorithms.randomise import Random_solver_v1, Random_solver_v2
 from code.algorithms.breadth_first import BreadthFirst 
+from code.algorithms.depthfirst import Depthfirst
+from code.algorithms.pruning import Pruning
 from code.algorithms.blockingbestfirst import BlockingBestFirst
 from code.algorithms.distancebestfirst import DistanceBestFirst
 from code.algorithms.blockingdistancebestfirst import BlockingDistanceBestFirst
-from code.algorithms.randomise import Random_solver_v1, Random_solver_v2
-from code.algorithms.depthfirst import Depthfirst
-from code.algorithms.branch_and_bound import Branchandbound
 import time 
 
 
@@ -21,7 +22,6 @@ def get_gameboard():
 
     while True:
         board_number = int(input("Choose which board (1-7) you want to solve or choose a randomly generated board (press 8): "))
-        size = 0 
         
         if board_number >= 1 and board_number <= 8:
             print()
@@ -30,8 +30,15 @@ def get_gameboard():
                 size = 6 
             elif board_number >= 4 and board_number <= 6:
                 size = 9 
-            else:
+            elif board_number == 7:
                 size = 12 
+            else:
+                while True:
+                     size = int(input("Choose board size of 6, 9, or 12 for randomly generated board: "))
+
+                     if size == 6 or size == 9 or size == 12:
+                         print()
+                         break 
 
             return board_number, size 
         
@@ -45,15 +52,16 @@ def choose_algorithm():
     print("Random: 1")
     print("Breadthfirst: 2")
     print("Depthfirst: 3")
-    print("Blocking best first (heuristic): 4")
-    print("Distance best first (heuristic): 5")
-    print("Blocking distance best first (heuristic): 6")
+    print("Depthfirst pruning: 4")
+    print("Blocking best first (heuristic): 5")
+    print("Distance best first (heuristic): 6")
+    print("Blocking distance best first (heuristic): 7")
     print()
 
     while True:
-        algorithm = int(input("Choose algorithm (1-6): "))
+        algorithm = int(input("Choose algorithm (1-7): "))
 
-        if algorithm >= 1 and algorithm <= 6:
+        if algorithm >= 1 and algorithm <= 7:
             print()
 
             return algorithm  
@@ -67,67 +75,86 @@ def get_initial_state(board_number, size):
     assert board_number >= 1 and board_number <= 8 
 
     if board_number == 8:
-        pass 
+        initial_board = RandomBoard(size)
+        initial_cars = initial_board.get_initial_cars()   
+        initial_state = State(initial_cars, size)
+        print("Randomly generated board:") 
+        print(initial_state.get_board())
+        print()
     else:
         initial_board = Board(size)
         initial_board.load_board(f"data/Rushhour{size}x{size}_{board_number}.csv")     
         initial_cars = initial_board.get_initial_cars()   
         initial_state = State(initial_cars, size)
 
-        return initial_state 
+    return initial_state 
 
 
 def solve_board(initial_state: State, algorithm, size):
     """ 
     Solves the board 
     """
-    assert algorithm >= 1 and algorithm <= 6 
+    assert algorithm >= 1 and algorithm <= 7 
 
     if algorithm == 1:
         if size == 6:    
             start = time.time() 
             random_solver = Random_solver_v2(initial_state)
-            random_solver.run()                               
+            random_solver.run()
+            print(f"It took {random_solver.steps} steps to solve this game")                                
             print(f"Solving this board took {time.time() - start} seconds")
         else:
             start = time.time() 
             random_solver = Random_solver_v1(initial_state)
-            random_solver.run()                               
+            random_solver.run() 
+            print(f"It took {random_solver.steps} steps to solve this game")                               
             print(f"Solving this board took {time.time() - start} seconds")
 
     elif algorithm == 2:  
         start = time.time() 
         bf = BreadthFirst(initial_state, size) 
         bf.run()
+        print(f"It took {bf.steps} steps to solve this game") 
         print(f"There were {len(bf.visited)} states visited")
         print(f"Solving this board took {time.time() - start} seconds")
 
     elif algorithm == 3: 
         start = time.time() 
         df = Depthfirst(initial_state, size) 
-        print(df.solve_board())
+        print(f"It took {df.solve_board()} steps to solve this game")
         print(f"There were {df.visited_states()} states visited")
         print()
         print(f"Solving this board took {time.time() - start} seconds") 
 
-    elif algorithm == 4:
+    elif algorithm == 4: 
         start = time.time() 
-        blocking = BlockingBestFirst(initial_state, size) 
-        blocking.run()
-        print(f"There were {len(blocking.visited)} states visited")
-        print(f"Solving this board took {time.time() - start} seconds")
+        pruning = Pruning(initial_state, size) 
+        print(f"It took {pruning.solve_board()} steps to solve this game")
+        print(f"There were {pruning.visited_states()} states visited")
+        print()
+        print(f"Solving this board took {time.time() - start} seconds") 
 
     elif algorithm == 5:
         start = time.time() 
+        blocking = BlockingBestFirst(initial_state, size) 
+        blocking.run()
+        print(f"It took {blocking.steps} steps to solve this game") 
+        print(f"There were {len(blocking.visited)} states visited")
+        print(f"Solving this board took {time.time() - start} seconds")
+
+    elif algorithm == 6:
+        start = time.time() 
         distance = DistanceBestFirst(initial_state, size) 
         distance.run()
+        print(f"It took {distance.steps} steps to solve this game") 
         print(f"There were {len(distance.visited)} states visited")
         print(f"Solving this board took {time.time() - start} seconds")
 
     else:
         start = time.time() 
-        blockingdistance = DistanceBestFirst(initial_state, size) 
+        blockingdistance = BlockingDistanceBestFirst(initial_state, size) 
         blockingdistance.run()
+        print(f"It took {blockingdistance.steps} steps to solve this game") 
         print(f"There were {len(blockingdistance.visited)} states visited")
         print(f"Solving this board took {time.time() - start} seconds")
  

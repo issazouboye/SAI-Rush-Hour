@@ -35,8 +35,7 @@ class Random_solver_v1:
             new_state = State(new_configuration, size)     
             self.steps += 1 
 
-            if new_state.is_solved():                
-                # print(f"It took {self.steps} steps to solve this game") 
+            if new_state.is_solved():              
                 return new_state 
    
     def step_count(self) -> int:
@@ -97,8 +96,7 @@ class Random_solver_v2:
             if move_made:                
                 self.board = self.get_updated_board(moved_car, old_column, old_row)                                                 
 
-            if self.is_solved():                 
-                print(f"It took {self.steps} steps to solve this game") 
+            if self.is_solved():          
                 break
 
     def get_updated_board(self, moved_car: Car, old_column: int, old_row: int) -> npt.NDArray[np.str_]:
