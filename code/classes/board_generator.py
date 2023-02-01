@@ -7,6 +7,7 @@ Students: Issa Zouboye, Alex van Diepen, Shreyas Potdar
 
 Description: This is a algorithm that generates a random rush hour puzzle.
 """
+
 from __future__ import annotations 
 from ..classes.car import Car
 from math import ceil 
@@ -100,6 +101,9 @@ class RandomBoard:
                 break         
 
     def car_fits(self, orientation, col, row, car_length):
+        """ 
+        A function that checks if a car can be placed on the board 
+        """
 
         if orientation == "H":
             for j in range(car_length):
@@ -114,6 +118,9 @@ class RandomBoard:
         return True
     
     def place_car(self, car: Car):
+        """  
+        A function that places a Car object on the board
+        """
 
         if car.orientation == "H":
             for j in range(car.length):
@@ -126,12 +133,23 @@ class RandomBoard:
         return self.board 
     
     def get_initial_cars(self):
+        """
+        A function that returns the list of car objects with stored
+        characteristics from the csv file. 
+        """
         return self.cars 
     
     def get_initial_board(self):
+        """
+        A function that returns the intial rush hour board.
+        """
         return self.board  
 
     def get_size(self):
+        """
+        A function that returns the size of the intial rush hour 
+        board
+        """
         return self.size 
     
 
