@@ -4,6 +4,8 @@ Authors: Issa Zouboye, Alex van Diepen, Shreyas Potdar
 
 Updated: 01/02/2023
 
+<img src = "https://github.com/issazouboye/SAI-Rush-Hour/blob/main/simulation_animation.gif" width = "200"/>
+
 ## Summary
 The main goal of this project is to investigate and apply a variety of algorithms and heuristics to solve the Rush Hour puzzle. The Rush Hour puzzle is solved when the ‘red’ car passes through the exit and this is only possible by moving all of the car’s blocking its path. A given car has either a vertical or horizontal orientation and the car can only move forwards or backwards into an empty space. Thus, we have implemented a mixture of different algorithms and heuristics to identify the best way possible to solve this Rush Hour puzzle. 
 
