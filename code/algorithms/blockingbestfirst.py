@@ -8,23 +8,20 @@ Students: Issa Zouboye, Alex van Diepen, Shreyas Potdar
 Description: This is a algorithm that uses the number of blocking cars as a heuristic
 to solve a rush hour game.
 """
+
 from __future__ import annotations
-import numpy as np 
-import copy 
 from ..classes.state import State
 from collections import deque
-from math import ceil 
 import heapq
-import time
-from typing import Optional
 
 
 class BlockingBestFirst:
 
     def __init__(self, first_state: State, size: int) -> None:
         """
-        Initializes the first board, a visited set, the amount of steps
-        and a priority queue on number of cars that block the red car
+        Takes an unsolved board with the size as arguments. Initializes a visited set, the amount of steps
+        and a priority queue where the states that have the least amount of cars blocking the red car will leave the queue 
+        first. 
         """
         # Stores first board
         self.first_state = first_state
@@ -61,8 +58,7 @@ class BlockingBestFirst:
             if board.is_solved():                
                 return board 
 
-            # Add all possible next boards to queue, if they're not in visited set 
-            
+            # Add all possible next boards to queue, if they're not in visited set             
             next_configurations = board.get_next_configurations()
 
             for configuration in next_configurations:

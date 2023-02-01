@@ -12,18 +12,18 @@ algorithm to solve a rush hour game
 from __future__ import annotations 
 from ..classes.state import State 
 from collections import deque
-import time
-from typing import Optional, List, Deque
+from typing import List, Deque
 
 
-class BreadthFirst:
-    """
-    A function that initializes the first state of the rush hour game
-    and the required variables to properly keep track of the solved rush
-    hour state such as the queue, set and dictionary.
-    """
+class BreadthFirst:    
 
     def __init__(self, first_state: State, size: int) -> None:
+        """
+        Takes an unsolved board with size as arguments. To solve the Rush Hour game,
+        it makes use of a queue, a set to track the visited states and a dictionary if you want to backtrace 
+        the taken path (e.g. for visualization purposes).   
+        """
+
         self.first_state = first_state
         
         # Stores the size of the board
@@ -39,7 +39,7 @@ class BreadthFirst:
         self.visited = set()  
 
         # Initialize a dictionary for path 
-        self.path = {}    
+        self.path: dict[State, State] = {}    
         
         # Put first state in queue
         self.boards_queue.append(first_state)
@@ -50,14 +50,14 @@ class BreadthFirst:
         # Add first state to path dictionary  
         self.path[first_state] = 0 
     
-    def run(self) -> Optional[State]:
+    def run(self) -> State:
         """
         A function that initializes the first state of the rush hour game
         and the required variables to properly keep track of the solved rush
         hour state such as the stack, set and dictionary.
         """
 
-        # Alrgorithm that runs until the stack is empty or a solution is found
+        # Algorithm that runs until the stack is empty or a solution is found
         while len(self.boards_queue) != 0:
             for depth in range(len(self.boards_queue)):
 
@@ -65,8 +65,7 @@ class BreadthFirst:
                 new_board = self.boards_queue.popleft()                
 
                 # If board is solved return result
-                if new_board.is_solved():
-                    # Print(f"It took {self.steps} steps to solve this game") 
+                if new_board.is_solved():                    
                     return new_board
 
                 # Add all possible next boards to queue, if they're not in visited set       
@@ -83,5 +82,4 @@ class BreadthFirst:
                         # Includes the next board state in the dictionary, with the its parent state as value           
                         self.path[next_state] = new_board 
             
-            self.steps += 1
-  
+            self.steps += 1  

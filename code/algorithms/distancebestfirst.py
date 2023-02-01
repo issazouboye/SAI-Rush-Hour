@@ -8,24 +8,21 @@ Students: Issa Zouboye, Alex van Diepen, Shreyas Potdar
 Description: This is a algorithm that uses the number of blocking cars as a heuristic
 to solve a rush hour game.
 """
+
 from __future__ import annotations
-import numpy as np 
-import copy 
-from ..classes.board import Board
 from ..classes.state import State
 from collections import deque
-from math import ceil 
 import heapq
-import time
 
 
 class DistanceBestFirst:
 
     def __init__(self, first_state: State, size: int) -> None:
         """
-        Initializes the first board, a visited set, the amount of steps
-        and a priority queue
+        Takes an unsolved board with the size as arguments. Initializes a visited set, the amount of steps
+        and a priority queue where the states with the smallest distance to the exit will leave the queue first.  
         """
+
         # Stores first board
         self.first_state = first_state
         # Stores distance from red car to exit
@@ -61,8 +58,7 @@ class DistanceBestFirst:
             if board.is_solved():                
                 return board 
 
-            # Add all possible next boards to queue, if they're not in visited set 
-            
+            # Add all possible next boards to queue, if they're not in visited set             
             next_configurations = board.get_next_configurations()
 
             for configuration in next_configurations:
@@ -74,5 +70,5 @@ class DistanceBestFirst:
                 if next_board not in self.visited:
                     # Pushes the new board in a priority queue
                     heapq.heappush(self.boards_queue, (distance, self.steps + 1, next_board))
-                    # Puts new board in visited set``
+                    # Puts new board in visited set
                     self.visited.add(next_board) 

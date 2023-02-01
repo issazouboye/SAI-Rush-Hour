@@ -8,10 +8,10 @@ Students: Issa Zouboye, Alex van Diepen, Shreyas Potdar
 Description: This is a program that implements the branch
 and bound algorithm to solve a rush hour game
 """
+
 from __future__ import annotations
 from ..classes.state import State
-from ..classes.board import Board 
-from typing import Optional, List
+from typing import List
 
 
 class Pruning:
@@ -78,8 +78,12 @@ class Pruning:
                     
                     # New board put into the visited set
                     self.stack.append(following_state)
+
         return self.current_best
 
     def visited_states(self) -> int:
+        """  
+        Returns the the amount of visited states.
+        """
         return len(self.visitedset)
 

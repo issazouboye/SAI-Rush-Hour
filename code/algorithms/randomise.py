@@ -5,9 +5,10 @@ Course: Algoritmen en Heuristieken
 
 Students: Issa Zouboye, Alex van Diepen, Shreyas Potdar
 
-Description: This is a program that implements two differently implemented
+Description: This is a program that implements two different implemented
 random algorthms to solved the rush hour game
 """
+
 from __future__ import annotations 
 import numpy as np 
 import random 
@@ -21,12 +22,17 @@ import numpy.typing as npt
 class Random_solver_v1:
     
     def __init__(self, initial_state: State) -> None:
-        # Store first state
+        """ 
+        Takes an unsolved board as argument and randomly solves it 
+        """        
         self.initial_state = initial_state    
         # Store steps    
         self.steps = 0                        
     
-    def run(self) -> State:                 
+    def run(self) -> State:
+        """  
+        Runs the random solver 
+        """                 
         # Store state
         new_state = self.initial_state 
         # Store size
@@ -44,13 +50,19 @@ class Random_solver_v1:
                 return new_state 
    
     def step_count(self) -> int:
-        # Returns amount of steps
+        """ 
+        Returns amount of steps
+        """     
         return self.steps     
     
 
 class Random_solver_v2:
 
     def __init__(self, initial_state: State) -> None:
+        """  
+        Takes an unsolved board as argument and randomly solves it 
+        """
+        
         # Store first state
         self.initial_state = initial_state
         # Store car objects
@@ -60,7 +72,10 @@ class Random_solver_v2:
         # Store steps
         self.steps = 0      
 
-    def run(self) -> None:   
+    def run(self) -> None:  
+        """  
+        Runs the random solver 
+        """    
 
         while True:     
             # Choose random car        
@@ -138,6 +153,9 @@ class Random_solver_v2:
                 break
 
     def get_updated_board(self, moved_car: Car, old_column: int, old_row: int) -> npt.NDArray[np.str_]:
+        """   
+        Function that updates the board based on the moved car and the old coordinates of the moved car 
+        """
  
         # Stores column
         new_column = moved_car.column
@@ -199,6 +217,9 @@ class Random_solver_v2:
         return self.board  
 
     def is_solved(self) -> bool: 
+        """  
+        Checks if the board is solved 
+        """
         
         # For every car object in the set of cars
         for car in self.cars:
@@ -212,6 +233,9 @@ class Random_solver_v2:
 
         return False                
         
-    def step_count(self) -> int:
+    def step_count(self) -> int:   
+        """ 
+        Returns amount of steps
+        """         
         return self.steps 
                  

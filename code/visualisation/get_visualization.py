@@ -50,5 +50,4 @@ if __name__ == "__main__":
     for i in stateslist:
         boardslist.append(i.board)
 
-    visualize(boardslist, saveplot=True)
-    
+    visualize(boardslist, saveplot=True)    

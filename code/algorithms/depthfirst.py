@@ -8,18 +8,19 @@ Students: Issa Zouboye, Alex van Diepen, Shreyas Potdar
 Description: This is a program that implements the depth-first
 algorithm to solve a rush hour game
 """
-from __future__ import annotations
 
+from __future__ import annotations
 from ..classes.state import State
-from typing import Optional, List
+from typing import List, Union
 
 
 class Depthfirst:
+
     def __init__(self, cars_set: State, size: int) -> None:
-        """
-        A function that initializes the first state of the rush hour game
-        and the required variables to properly keep track of the solved rush
-        hour state such as the stack, set and dictionary.
+        """       
+        Takes an unsolved board with size as arguments. To solve the Rush Hour game,
+        it makes use of a stack, a set to track the visited states and a dictionary if you want to backtrace 
+        the taken path. 
         """
 
         # Stores the intial state of the rush hour configuration
@@ -29,7 +30,7 @@ class Depthfirst:
         self.size = size
 
         # Dictionary to keep track of each state's depth level and previous state
-        self.archive = {}
+        self.archive: dict[State, List[Union[State, 0], int]] = {}
         self.archive[cars_set] = [0, 0]
 
         # Initializes a stack and includes the initial state in the stack
@@ -74,7 +75,6 @@ class Depthfirst:
 
                     # New board put into the visited set
                     self.visitedset.add(following_state)
-
    
     def backtrace(self, end_board: State) -> List[State]:
         """
@@ -88,10 +88,11 @@ class Depthfirst:
 
         boardslist.pop()
         boardslist.reverse()
+
         return boardslist
 
     def visited_states(self) -> int:
-        return len(self.visitedset) 
-
-
-        
+        """  
+        Returns the the amount of visited states.
+        """
+        return len(self.visitedset)       

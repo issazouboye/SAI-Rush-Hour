@@ -50,6 +50,3 @@ def visualize(grid_values:List[np.ndarray], showplot:bool=True, saveplot:bool=Fa
 
     if showplot:
         plt.show()
-
-
-

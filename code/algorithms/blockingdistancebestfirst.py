@@ -8,24 +8,20 @@ Students: Issa Zouboye, Alex van Diepen, Shreyas Potdar
 Description: This is a algorithm that uses the number of blocking cars as a heuristic
 to solve a rush hour game.
 """
+
 from __future__ import annotations
-import numpy as np 
-import copy 
-from ..classes.board import Board
 from ..classes.state import State
 from collections import deque
-from math import ceil 
 import heapq
-import time
-from typing import Optional
 
 
 class BlockingDistanceBestFirst:
 
     def __init__(self, first_state: State, size: int) -> None:
         """
-        Initializes the first board, a visited set, the amount of steps
-        and a priority queue on number of cars that block the red car
+        Takes an unsolved board with the size as arguments. Initializes a visited set, the amount of steps
+        and a priority queue where the states that have the least amount of cars blocking the red car in 
+        combination with the shortest distance of the red car to the exit will leave the queue first. 
         """
         # Stores first board
         self.first_state = first_state
@@ -54,11 +50,10 @@ class BlockingDistanceBestFirst:
         Makes the cars move using the blocking heuristic, 
         until winning board configuration is achieved
         """
-        while len(self.boards_queue) != 0 :
+        while len(self.boards_queue) != 0:
             # Pops and stores amount of blocking cars, steps and the board
             blockingdist, self.steps, board = heapq.heappop(self.boards_queue)  
                          
-
             # If board is solved return result
             if board.is_solved():                
                 return board 
@@ -77,7 +72,4 @@ class BlockingDistanceBestFirst:
                     # Pushes the new board in a priority queue
                     heapq.heappush(self.boards_queue, (blockingdist, self.steps + 1, next_board))
                     # Puts new board in visited set
-                    self.visited.add(next_board) 
-            
-
-
+                    self.visited.add(next_board)             
