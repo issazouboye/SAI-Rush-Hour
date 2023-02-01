@@ -20,6 +20,7 @@ class Car:
     """
     A function that initializes a variables that define a car object
     """
+
     def __init__(self, name, orientation, column, row, length) -> None:
         self.name = name 
         self.orientation = orientation 
@@ -115,7 +116,7 @@ class Car:
         return hash(self.__str__())
 
     def __eq__(self, other) -> bool:
-       """
+        """
         A function that enables you to compare whther two car objects are the same.
         """
         return isinstance(other, Car) 
