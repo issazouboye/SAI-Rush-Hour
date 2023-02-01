@@ -26,13 +26,13 @@ class DistanceBestFirst:
         Initializes the first board, a visited set, the amount of steps
         and a priority queue
         """
-        # stores first board
+        # Stores first board
         self.first_state = first_state
-        # stores distance from red car to exit
+        # Stores distance from red car to exit
         self.first_distance = first_state.reddistance()
-        # stores size of board
+        # Stores size of board
         self.size = size
-        # stores amount of steps 
+        # Stores amount of steps 
         self.steps = 0
 
         # Initialize a queue 
@@ -53,11 +53,10 @@ class DistanceBestFirst:
         Initializes the first board, a visited set, the amount of steps
         and a priority queue on distance from the exit for the red car
         """
-        while len(self.boards_queue) != 0 :
+        while len(self.boards_queue) != 0:
             # Pops and stores distance red car to exit, steps and the board
             distance, self.steps, board = heapq.heappop(self.boards_queue)  
                          
-
             # If board is solved return result
             if board.is_solved():                
                 return board 
@@ -67,15 +66,13 @@ class DistanceBestFirst:
             next_configurations = board.get_next_configurations()
 
             for configuration in next_configurations:
-                # stores new board configuration
+                # Stores new board configuration
                 next_board = State(configuration, self.size)
-                # stores distance and steps combined
+                # Stores distance and steps combined
                 distance = next_board.reddistance() + self.steps
 
                 if next_board not in self.visited:
-                    # pushes the new board in a priority queue
+                    # Pushes the new board in a priority queue
                     heapq.heappush(self.boards_queue, (distance, self.steps + 1, next_board))
-                    # puts new board in visited set``
+                    # Puts new board in visited set``
                     self.visited.add(next_board) 
-            
-

@@ -18,92 +18,133 @@ from math import ceil
 import numpy.typing as npt
 
 
-
 class Random_solver_v1:
     
     def __init__(self, initial_state: State) -> None:
-        self.initial_state = initial_state        
+        # Store first state
+        self.initial_state = initial_state    
+        # Store steps    
         self.steps = 0                        
     
     def run(self) -> State:                 
-
+        # Store state
         new_state = self.initial_state 
+        # Store size
         size = self.initial_state.get_size()
 
-        while True:        
+        while True:       
+            # Choose random new board configuration 
             new_configuration = random.choice(new_state.get_next_configurations())    
-            new_state = State(new_configuration, size)     
+            new_state = State(new_configuration, size)    
+            # Count step 
             self.steps += 1 
 
-            if new_state.is_solved():              
+            if new_state.is_solved(): 
+                # Returns winning board             
                 return new_state 
    
     def step_count(self) -> int:
+        # Returns amount of steps
         return self.steps     
     
-
 
 class Random_solver_v2:
 
     def __init__(self, initial_state: State) -> None:
+        # Store first state
         self.initial_state = initial_state
+        # Store car objects
         self.cars = set(initial_state.get_cars())
+        # Store board
         self.board = initial_state.get_board()
+        # Store steps
         self.steps = 0      
 
     def run(self) -> None:   
 
-        while True:             
-            new_car = random.choice(list(self.cars))           
+        while True:     
+            # Choose random car        
+            new_car = random.choice(list(self.cars))   
+            # Store new column        
             old_column = new_car.column
+            # Store new row
             old_row = new_car.row   
+            # Initialize move_made
             move_made = False          
 
+            # If orientation is horizontal
             if new_car.orientation == "H":
+                # Choose random direction
                 direction = random.choice(["left", "right"])
 
+                # If the car can move left
                 if direction == "left" and new_car.is_movable(direction, self.board):
-                    moved_car = new_car.move_left()                                                         
+                    # Moves the car left
+                    moved_car = new_car.move_left() 
+                    # Remove old car location                                                        
                     self.cars.remove(new_car)
-                    self.cars.add(moved_car)                                             
+                    # Add new car location
+                    self.cars.add(moved_car) 
+                    # Count step                                            
                     self.steps += 1
                     move_made = True 
-
+ 
+                # If the car can move right
                 elif direction == "right" and new_car.is_movable(direction, self.board):
-                    moved_car = new_car.move_right()                                                         
+                    # Moves the car right
+                    moved_car = new_car.move_right()
+                    # Remove old car location                                                         
                     self.cars.remove(new_car)
-                    self.cars.add(moved_car)                                           
+                    # Add new car location
+                    self.cars.add(moved_car)  
+                    # Count step                                         
                     self.steps += 1 
                     move_made = True
 
+            # If the car orientation is vertical
             if new_car.orientation == "V":
+                # Choose random direction
                 direction = random.choice(["up", "down"])
 
+                # If the car can move up
                 if direction == "up" and new_car.is_movable(direction, self.board):
-                    moved_car = new_car.move_up()                                                         
+                    # Moves the car up
+                    moved_car = new_car.move_up() 
+                    # Remove old car location                                                         
                     self.cars.remove(new_car)
-                    self.cars.add(moved_car)                                               
+                    # Add new car location
+                    self.cars.add(moved_car) 
+                    # Count step                                              
                     self.steps += 1
                     move_made = True 
 
+                # If the car can move down
                 elif direction == "down" and new_car.is_movable(direction, self.board):
-                    moved_car = new_car.move_down()                                                         
+                    # Moves the car down
+                    moved_car = new_car.move_down()   
+                    # Remove old location                                                      
                     self.cars.remove(new_car)
-                    self.cars.add(moved_car)                                             
+                    # Add new location
+                    self.cars.add(moved_car) 
+                    # Count step                                            
                     self.steps += 1
                     move_made = True 
 
-            if move_made:                
+            if move_made:  
+                # Stores new board configuration              
                 self.board = self.get_updated_board(moved_car, old_column, old_row)                                                 
 
             if self.is_solved():          
                 break
 
     def get_updated_board(self, moved_car: Car, old_column: int, old_row: int) -> npt.NDArray[np.str_]:
-
+ 
+        # Stores column
         new_column = moved_car.column
+        # Stores row
         new_row = moved_car.row       
 
+        # If the cars orientation is horizontal
         if moved_car.orientation == "H":
             if moved_car.length == 2:
 
@@ -129,6 +170,7 @@ class Random_solver_v2:
                     self.board[old_row][new_column + 3] = "0"
                     self.board[old_row][new_column] = moved_car.name 
 
+        # If the cars orientation is vertical
         if moved_car.orientation == "V":
             if moved_car.length == 2:
 
@@ -158,9 +200,13 @@ class Random_solver_v2:
 
     def is_solved(self) -> bool: 
         
+        # For every car object in the set of cars
         for car in self.cars:
+            # Stores winning column in board
             winning_column = len(self.board) - 2 
+            # Stores winning row in board
             winning_row = ceil(len(self.board) / 2) - 1 
+            # If the red car is at the exit
             if car.name == "X" and car.column == winning_column and car.row == winning_row:
                 return True 
 

@@ -26,13 +26,13 @@ class BlockingBestFirst:
         Initializes the first board, a visited set, the amount of steps
         and a priority queue on number of cars that block the red car
         """
-        # stores first board
+        # Stores first board
         self.first_state = first_state
-        # stores amount of blocking cars in first board
+        # Stores mount of blocking cars in first board
         self.first_score = first_state.blockingcars()
-        # stores size of board
+        # Stores size of board
         self.size = size 
-        # stores amount of steps
+        # Stores amount of steps
         self.steps = 0
 
         # Initialize a queue 
@@ -53,11 +53,10 @@ class BlockingBestFirst:
         Makes the cars move using the blocking heuristic, 
         until winning board configuration is achieved
         """
-        while len(self.boards_queue) != 0 :
+        while len(self.boards_queue) != 0:
             # Pops and stores amount of blocking cars, steps and the board
             blocks, self.steps, board = heapq.heappop(self.boards_queue)  
                          
-
             # If board is solved return result
             if board.is_solved():                
                 return board 
@@ -67,18 +66,14 @@ class BlockingBestFirst:
             next_configurations = board.get_next_configurations()
 
             for configuration in next_configurations:
-                # stores new board configuration
+                # Stores new board configuration
                 next_board = State(configuration, self.size)
-                # stores amount of blocking cars and steps combined
+                # Stores amount of blocking cars and steps combined
                 blocks = next_board.blockingcars() + self.steps
 
                 if next_board not in self.visited:
-                    # pushes the new board in a priority queue
+                    # Pushes the new board in a priority queue
                     heapq.heappush(self.boards_queue, (blocks, self.steps + 1, next_board))
-                    # puts new board in visited set
+                    # Puts new board in visited set
                     self.visited.add(next_board) 
-            
-
-
-
-    
+                
